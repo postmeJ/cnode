@@ -1,0 +1,28 @@
+import { Routes, RouterModule } from "@angular/router"
+import { NgModule } from "@angular/core"
+import { LoginComponent } from "./login/login.component"
+import { TopicsComponent } from "./topics/topics.component"
+import { AuthGuardService } from "./core/auth-guard.service"
+const routes: Routes = [
+    {
+        path: '',
+        redirectTo: 'topics/ALL',
+        pathMatch: 'full'
+    },
+    {
+        path: 'topics',
+        redirectTo: 'topics/ALL' ,
+        canLoad: [AuthGuardService]
+    }
+];
+
+@NgModule({
+    imports: [
+        RouterModule.forRoot(routes, { useHash: true })
+    ],
+    exports: [
+        RouterModule
+    ]
+})
+
+export class AppRouterModule { }

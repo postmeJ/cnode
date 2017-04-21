@@ -1,0 +1,10 @@
+<div>
+  <app-header title="登录" [back]="false"></app-header>
+  <form (ngSubmit)="onSubmit()">
+    <mdl-textfield type="text" label="accessToken..." name="accessToken" floating-label [(ngModel)]="accessToken" #accessTokenRef="ngModel">
+    </mdl-textfield>
+    <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+      Login
+    </button>
+  </form>
+</div>

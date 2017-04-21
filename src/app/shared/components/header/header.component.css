@@ -1,0 +1,18 @@
+@import "//at.alicdn.com/t/font_um4s8i1cjkk2o6r.css";
+header {
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    background: #2196f3;
+    color: #fff;
+    font-size: 16px;
+}
+
+header div {
+    flex: 1;
+    text-align: center;
+}
+
+button + div {
+    margin-left: -32px;
+}
