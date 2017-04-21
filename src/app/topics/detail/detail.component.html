@@ -1,0 +1,6 @@
+<app-header title="详情">
+</app-header>
+<div *ngIf="detail" class="content">
+  <h3>{{detail.title}}</h3>
+  <div [innerHtml]="detail.content | safeHtml"></div>
+</div>

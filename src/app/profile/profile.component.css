@@ -17,7 +17,7 @@
     margin-right: .5rem;
 }
 
-.content .author-avatar img {
+.content .author-avatar  {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -27,19 +27,20 @@ mdl-list-item-text-body {
     align-items: center;
     color: #999
 }
-mdl-list-item {
-    border-bottom: 1px solid #e5e5e5
-}
+
 .title,
 .empty {
     text-align: center;
     font-size: 16px;
 }
 .empty {
-    color: #999
+    color: #999;
+    padding-top: 1rem;
 }
 .title {
-    margin: 1rem 0
+    margin: 1rem 0 0 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e5e5
 }
 div[mdl-shadow="2"] {
     padding: .25rem 0;

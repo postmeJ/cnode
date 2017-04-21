@@ -9,12 +9,13 @@ export class Auth {
     redirectUrl: string;
     errMsg: string;
 }
+export class Author {
+    loginname: string;
+    avatar_url: string;
+}
 export class Topics {
     id: string;
-    author: {
-        loginname: string;
-        avatar_url: string;
-    };
+    author: Author;
     title: string;
     last_reply_at: string;
 }
@@ -27,6 +28,30 @@ export class UserDetails {
     score: number;
     recent_topics: Topics[]
     recent_replies: Topics[]
+}
+export class Replies {
+    id: string;
+    author: Author;
+    content: string;
+    ups: string[];
+    create_at: string;
+    reply_id: string;
+    is_uped: boolean;
+}
+export class TopicDetail {
+    id: string;
+    author_id: string;
+    tab: string;
+    title: string;
+    good: boolean;
+    top: boolean;
+    reply_count: number;
+    visit_count: number;
+    content: string;
+    reply_id: string;
+    create_at: string;
+    author: Author;
+    replies: Replies[];
 }
 
 export const BASE_API_URL = "https://cnodejs.org/api/v1";

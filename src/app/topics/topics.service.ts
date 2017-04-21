@@ -1,18 +1,16 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx'
 import { Http } from "@angular/http"
-import { UserDetails, User } from "../domain/entities"
+import { UserDetails, User, BASE_API_URL, TopicDetail } from "../domain/entities"
 
 @Injectable()
 export class TopicsService {
-  constructor( @Inject('user') private service, private http: Http) {
+  constructor(private http: Http) {
 
   }
-
-  getUserDetail(): Observable<UserDetails> {
-    return this.service.getUserInfo().pluck("loginname").switchMap(name => {
-      return this.service.findUserDetail(name);
-    });
+  getTopicDetailById(id: string): Observable<TopicDetail> {
+    return this.http.get(`${BASE_API_URL}/topic/${id}`).map(res => {
+      return res.json() as TopicDetail;
+    })
   }
-
 }

@@ -8,14 +8,18 @@ import { UserDetails } from "../domain/entities"
 })
 export class TopicsComponent implements OnInit {
   userDetail: UserDetails = null;
-  constructor(@Inject('topics') private service) { }
+  constructor( @Inject('user') private userService) { }
 
   ngOnInit() {
-    this.service.getUserDetail().subscribe(({data}) =>{
+    this.getUserDetail();
+  }
+  getUserDetail() {
+    this.userService.getUserInfo().pluck("loginname").switchMap(name => {
+      return this.userService.findUserDetail(name);
+    }).subscribe(({ data }) => {
       this.userDetail = Object.assign({}, data);
     })
   }
- 
   tabChanged(e) {
     console.log(e);
   }

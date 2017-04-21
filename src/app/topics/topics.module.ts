@@ -2,7 +2,9 @@ import { SharedModule } from "../shared/shared.module"
 import { NgModule } from '@angular/core';
 import { TopicsRoutingModule } from "./topics.routing"
 import { TopicsComponent } from "./topics.component";
-import { TopicsService } from "./topics.service"
+import { TopicsService } from "./topics.service";
+import { DetailComponent } from './detail/detail.component';
+import { SafeHtmlPipe } from './detail/safe-html.pipe';
 
 @NgModule({
     imports: [
@@ -11,6 +13,8 @@ import { TopicsService } from "./topics.service"
     ],
     declarations: [
         TopicsComponent,
+        DetailComponent,
+        SafeHtmlPipe
     ],
     providers:[
         {
