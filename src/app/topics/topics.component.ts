@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { UserDetails } from "../domain/entities"
 
 @Component({
   selector: 'app-topics',
@@ -6,10 +7,16 @@ import { Component, OnInit, Inject } from '@angular/core';
   styleUrls: ['./topics.component.css']
 })
 export class TopicsComponent implements OnInit {
-
-  constructor() { }
+  userDetail: UserDetails = null;
+  constructor(@Inject('topics') private service) { }
 
   ngOnInit() {
+    this.service.getUserDetail().subscribe(({data}) =>{
+      this.userDetail = Object.assign({}, data);
+    })
   }
-
+ 
+  tabChanged(e) {
+    console.log(e);
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MdlSnackbarService } from "angular2-mdl"
-import { UserDetails } from "../domain/entities"
+import { UserDetails, Topics } from "../domain/entities"
 
 @Component({
   selector: 'app-user',
@@ -9,6 +9,7 @@ import { UserDetails } from "../domain/entities"
 })
 export class ProfileComponent implements OnInit {
   userDetails: UserDetails;
+  collectTopics: Topics[] = [];
   @Input() basis: boolean = true;
   constructor( @Inject('profile') private service, private MdlSnackbarService: MdlSnackbarService) { }
 
@@ -21,6 +22,13 @@ export class ProfileComponent implements OnInit {
       error => {
         this.MdlSnackbarService.showToast("请求出错，请联系管理员")
       }
-      )
+      );
+    this.service.getUserCollect().subscribe(topics => {
+      this.collectTopics.push(...topics.data);
+    },
+      error => {
+        this.MdlSnackbarService.showToast("请求出错，请联系管理员")
+      }
+    )
   }
 }
