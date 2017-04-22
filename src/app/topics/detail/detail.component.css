@@ -1,12 +1,63 @@
-body {
-    background: #e22
+.theme-header .info {
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+    background: #ccc
 }
+.theme-header .info img {
+    width: 4rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.theme-header .info div.collect {
+    flex:  1;
+}
+.theme-header .info div.collect a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #999;
+}
+.theme-header .info div.collect .active a {
+    color: #e22
+}
+.theme-header .info div.op{
+    max-width:  12rem;
+    color: #999
+}
+.theme-header .info div.op p,
+.theme-header .info div.collect p {
+    margin: 0
+}
+.theme-header .info div.op .display span,
+.theme-header .info div.op .display {
+    display: flex;
+    justify-content: space-between
+}
+
 h1 {
+    font-size: 3rem;
+}
+h2 {
+    font-size: 2.5rem;
+}
+h3 {
     font-size: 2rem;
+}
+.markdown-text pre code,
+p {
+    font-size: 16px;
+}
+.markdown-body { 
+    padding: 0 .5rem
+}
+.content-title {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5
 }
  .markdown-text pre code {
     display: inline;
-    max-width: auto;
+    max-width: 100%;
     padding: 0;
     margin: 0;
     overflow: visible;
@@ -18,4 +69,12 @@ h1 {
 
 .markdown-text img {
     max-width: 100%;
+}
+.markdown-body .highlight pre, .markdown-body pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border-radius: 3px;
 }

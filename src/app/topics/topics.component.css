@@ -2,12 +2,23 @@
     padding:  1rem 0;
     background: #2196f3;
     line-height: 44px;
+    min-height: 18rem;
 }
 .user-card div {
     display: flex;
     justify-content: center;
     font-size: 16px;
     color: #fff
+}
+.no-login {
+    text-align: center;
+}
+.no-login mdl-icon {
+    margin-top: 3rem;
+    font-size: 8rem;
+}
+.no-login p {
+    color: #fff;
 }
 .user-avatar img {
     border-radius: 50%;

@@ -4,7 +4,8 @@ import { TopicsRoutingModule } from "./topics.routing"
 import { TopicsComponent } from "./topics.component";
 import { TopicsService } from "./topics.service";
 import { DetailComponent } from './detail/detail.component';
-import { SafeHtmlPipe } from './detail/safe-html.pipe';
+import { ReplyComponent } from './reply/reply.component';
+import { ReplyItemComponent } from './reply/reply-item/reply-item.component';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { SafeHtmlPipe } from './detail/safe-html.pipe';
     declarations: [
         TopicsComponent,
         DetailComponent,
-        SafeHtmlPipe
+        ReplyComponent,
+        ReplyItemComponent,
     ],
     providers:[
         {

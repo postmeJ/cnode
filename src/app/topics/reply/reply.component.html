@@ -1,0 +1,22 @@
+<ul class="reply-list">
+  <li *ngFor="let reply of replys">
+    <app-reply-item [item]="reply" (onStarTriggered)="onStarTriggered()" (onReplyTriggered)="replyDialog.show()">
+    </app-reply-item>
+  </li>
+</ul>
+<mdl-dialog #replyDialog [mdl-dialog-config]="{
+              clickOutsideToClose: true,
+              styles:{'width': '300px'},
+              isModal:true,
+              openFrom: editUserButton,
+              enterTransitionDuration: 400,
+              leaveTransitionDuration: 400}" (show)="onDialogShow(dialogRef)" (hide)="onDialogHide()">
+  <h3 class="mdl-dialog__title">评论</h3>
+  <div class="mdl-dialog__content">
+    <mdl-textfield type="text" label="评论..." [(ngModel)]="reply" floating-label autofocus></mdl-textfield>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button mdl-button (click)="onReplyTriggered()" mdl-button-type="raised" mdl-colored="primary" mdl-ripple>提交</button>
+    <button mdl-button (click)="replyDialog.close()" mdl-ripple>取消</button>
+  </div>
+</mdl-dialog>

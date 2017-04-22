@@ -14,7 +14,7 @@ export class TopicsComponent implements OnInit {
     this.getUserDetail();
   }
   getUserDetail() {
-    this.userService.getUserInfo().pluck("loginname").switchMap(name => {
+    this.userService.getUserInfo().filter(user => user != null).pluck("loginname").switchMap(name => {
       return this.userService.findUserDetail(name);
     }).subscribe(({ data }) => {
       this.userDetail = Object.assign({}, data);

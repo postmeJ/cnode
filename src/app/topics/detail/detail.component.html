@@ -1,6 +1,30 @@
 <app-header title="详情">
 </app-header>
 <div *ngIf="detail" class="content">
-  <h3>{{detail.title}}</h3>
-  <div [innerHtml]="detail.content | safeHtml"></div>
+  <div class="theme-header">
+    <div class="info">
+      <img [src]="detail.author.avatar_url" alt="">
+      <div class="collect">
+        <p class="author">{{detail.author.loginname}}</p>
+        <p *ngIf="isCollect" class="active">
+          <a (click)="deCollectTopic(detail.id)">已收藏<mdl-icon>star</mdl-icon></a>
+        </p>
+        <p *ngIf="!isCollect">
+          <a (click)="collectTopic(detail.id)">收藏<mdl-icon>star</mdl-icon></a>
+        </p>
+      </div>
+      <div class="op">
+        <p class="create-time">发表于：{{detail.create_at | fromNow}}</p>
+        <p class="display">
+          <span class="visit_count"><mdl-icon>visibility</mdl-icon>{{detail.visit_count}}</span>
+          <span class="reply_count"><mdl-icon>chat_bubble</mdl-icon>{{detail.reply_count}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <h2 class="content-title">{{detail.title}}</h2>
+  <div class="markdown-body" [innerHtml]="detail.content"></div>
+  <div class="reply">
+    <app-reply [replys]="detail.replies"></app-reply>
+  </div>
 </div>

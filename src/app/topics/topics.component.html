@@ -1,5 +1,5 @@
 <div class="demo-container" mdl-shadow="8">
-  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="waterfall"  (mdl-layout-tab-active-changed)="tabChanged($event)">
+  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="waterfall" (mdl-layout-tab-active-changed)="tabChanged($event)">
     <mdl-layout-header>
       <mdl-layout-header-row>
         <mdl-layout-title>Cnode</mdl-layout-title>
@@ -22,12 +22,23 @@
             <div class="create-time">注册于：{{userDetail.create_at | fromNow}}</div>
           </div>
         </div>
+        <div *ngIf="!userDetail">
+          <div>
+            <div class="no-login">
+              <a [routerLink]="['/login']">
+                <mdl-icon>person</mdl-icon>
+              </a>
+              <p>点击头像登陆</p>
+            </div>
+          </div>
+        </div>
       </mdl-layout-title>
-      <nav class="mdl-navigation">
+      <nav *ngIf="userDetail" class="mdl-navigation">
         <a class="mdl-navigation__link" [routerLink]="['/profile']">个人中心</a>
         <a class="mdl-navigation__link">我的消息</a>
         <a class="mdl-navigation__link" [routerLink]="['/login']">退出</a>
       </nav>
+
     </mdl-layout-drawer>
     <mdl-layout-content>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="全部">
@@ -47,4 +58,4 @@
       </mdl-layout-tab-panel>
     </mdl-layout-content>
   </mdl-layout>
-  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="reply-item">
+  <img class="reply-item-img" [src]="item.author.avatar_url" alt="">
+  <div class="reply-item-content">
+    <h5>{{item.author.loginname}}</h5>
+    <p [innerHtml]="item.content"></p>
+  </div>
+  <div class="reply-item-footer">
+    <p class="create-at">{{item.create_at | fromNow}}</p>
+    <div class="reply-item-op">
+      <button #replyButton mdl-button
+        mdl-ripple (click)="onReply()">回复</button>
+      <button *ngIf="isStar" mdl-button mdl-button-type="icon" mdl-colored="primary">
+        <mdl-icon>thumb_up</mdl-icon>
+      </button>
+       <button *ngIf="!isStar" mdl-button mdl-button-type="icon">
+        <mdl-icon>thumb_up</mdl-icon>
+      </button>
+    </div>
+  </div>
+</div>

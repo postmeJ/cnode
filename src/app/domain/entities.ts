@@ -52,6 +52,7 @@ export class TopicDetail {
     create_at: string;
     author: Author;
     replies: Replies[];
+    is_collect: boolean;
 }
 
 export const BASE_API_URL = "https://cnodejs.org/api/v1";
