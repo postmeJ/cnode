@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Replies } from "../../domain/entities"
+import { MdlTextFieldComponent, MdlDialogReference, MdlSnackbarService, MdlDialogComponent } from "angular2-mdl"
 @Component({
   selector: 'app-reply',
   templateUrl: './reply.component.html',
@@ -7,25 +8,44 @@ import { Replies } from "../../domain/entities"
 })
 export class ReplyComponent implements OnInit {
   reply: string;
-  constructor() { }
-  _replys: Replies[] = [];
+  @ViewChild('replyDialog') replyDialog: MdlDialogComponent;
 
-  @Input() 
+  @ViewChild(MdlTextFieldComponent) private tfName: MdlTextFieldComponent;
+  constructor(private MdlSnackbarService: MdlSnackbarService) { }
+  _replys: Replies[] = [];
+  replyId: string;
+  @Input()
   set replys(replys: Replies[]) {
     this._replys = [...replys];
   }
-  get replys(){
+  get replys() {
     return this._replys;
   }
-  @Output() onStar = new EventEmitter<boolean>();
-  @Output() onReply = new EventEmitter<string>();
+  @Output() onReply = new EventEmitter<any>();
 
   ngOnInit() {
   }
-  onStarTriggered(){
-    this.onStar.emit(true);
+
+  onReplyTriggered(id: string) {
+    this.replyId = id;
+    this.replyDialog.show()
   }
-  onReplyTriggered(){
-    this.onReply.emit(this.reply);
+  submitReply() {
+    if (!this.reply) {
+      this.MdlSnackbarService.showToast("评论不能为空");
+      return;
+    }
+    this.onReply.emit({
+      reply: this.reply, 
+      replyId: this.replyId
+    });
+     this.replyDialog.close();
+     this.reply = "";
+  }
+  public onDialogShow(dialogRef: MdlDialogReference) {
+    this.tfName.setFocus();
+  }
+
+  public onDialogHide() {
   }
 }

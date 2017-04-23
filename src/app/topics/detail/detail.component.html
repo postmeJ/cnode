@@ -24,7 +24,17 @@
   </div>
   <h2 class="content-title">{{detail.title}}</h2>
   <div class="markdown-body" [innerHtml]="detail.content"></div>
+  <p class="reply-count">
+    共{{detail.replies.length}}条评论
+  </p>
   <div class="reply">
-    <app-reply [replys]="detail.replies"></app-reply>
+    <app-reply [replys]="detail.replies" (onReply)="submitReply($event)"></app-reply>
   </div>
+  <form (ngSubmit)="onSubmit()">
+    <mdl-textfield type="text" label="回复..." name="content" floating-label [(ngModel)]="content" #accessTokenRef="ngModel">
+    </mdl-textfield>
+    <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+      提交
+    </button>
+  </form>
 </div>

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { Replies } from "../../../domain/entities"
+import { Component, Inject, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Replies, USER_INFO_KEY, User } from "../../../domain/entities"
+import { MdlSnackbarService } from "angular2-mdl"
 
 @Component({
   selector: 'app-reply-item',
@@ -8,19 +9,32 @@ import { Replies } from "../../../domain/entities"
   encapsulation: ViewEncapsulation.None
 })
 export class ReplyItemComponent implements OnInit {
-  isStar: boolean;
   @Input() item: Replies;
-  @Output() onStarTriggered = new EventEmitter<boolean>();
-  @Output() onReplyTriggered = new EventEmitter<boolean>();
+  @Output() onReplyTriggered = new EventEmitter<string>();
+  private user: User = JSON.parse(sessionStorage.getItem(USER_INFO_KEY));
 
-  constructor() { }
+  constructor( @Inject('reply') private replySevice, private MdlSnackbarService: MdlSnackbarService) {
+  }
 
   ngOnInit() {
   }
-  onStar() {
-    this.onStarTriggered.emit(true);
+  onStar(reply_id: string) {
+    this.replySevice.toStar(reply_id).subscribe(res => {
+      if (res.action === "up") {
+        this.item.is_uped = true;
+        this.item.ups = [...this.item.ups, this.user.id.toString()];
+      } else if (res.action === "down") {
+        this.item.is_uped = false;
+        this.item.ups = this.item.ups.filter(id => id !== this.user.id);
+      }
+    },
+      ({ _body }) => {
+        let error = JSON.parse(_body);
+        this.MdlSnackbarService.showToast(error.error_msg)
+      }
+    )
   }
-  onReply() {
-    this.onReplyTriggered.emit(true);
+  onReply(reply_id: string) {
+    this.onReplyTriggered.emit(reply_id);
   }
 }

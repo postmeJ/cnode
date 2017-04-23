@@ -1,6 +1,6 @@
 export class User {
     loginname: string;
-    id: number;
+    id: string | number;
     avatar_url?: string;
 }
 export class Auth {

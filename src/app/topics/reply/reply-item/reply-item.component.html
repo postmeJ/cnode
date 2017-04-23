@@ -8,13 +8,14 @@
     <p class="create-at">{{item.create_at | fromNow}}</p>
     <div class="reply-item-op">
       <button #replyButton mdl-button
-        mdl-ripple (click)="onReply()">回复</button>
-      <button *ngIf="isStar" mdl-button mdl-button-type="icon" mdl-colored="primary">
-        <mdl-icon>thumb_up</mdl-icon>
+        mdl-ripple (click)="onReply(item.id)">回复</button>
+      <button *ngIf="item.is_uped" mdl-button mdl-button-type="icon" (click)="onStar(item.id)" mdl-colored="primary">
+        <mdl-icon>thumb_up</mdl-icon> 
       </button>
-       <button *ngIf="!isStar" mdl-button mdl-button-type="icon">
-        <mdl-icon>thumb_up</mdl-icon>
+       <button *ngIf="!item.is_uped" mdl-button mdl-button-type="icon" (click)="onStar(item.id)" >
+        <mdl-icon>thumb_up</mdl-icon> 
       </button>
+      {{item.ups.length}}
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@ import { UserDetails, User, BASE_API_URL, TopicDetail } from "../domain/entities
 
 @Injectable()
 export class TopicsService {
-   private headers = new Headers({ 'Content-Type': 'application/json' });
+  private headers = new Headers({ 'Content-Type': 'application/json' });
   constructor(private http: Http) {
 
   }
@@ -17,12 +17,16 @@ export class TopicsService {
   }
   //收藏主题
   collectTopicById(topicId: string, accesstoken: string): Observable<any> {
-    return this.http.post(`${BASE_API_URL}/topic_collect/collect`, JSON.stringify({topic_id: topicId, accesstoken: accesstoken}), {headers: this.headers})
+    return this.http.post(`${BASE_API_URL}/topic_collect/collect`, JSON.stringify({ topic_id: topicId, accesstoken: accesstoken }), { headers: this.headers })
       .map(res => res.json())
   }
   //取消收藏
   deCollectTopicById(topicId: string, accesstoken: string): Observable<any> {
-    return this.http.post(`${BASE_API_URL}/topic_collect/de_collect`, JSON.stringify({topic_id: topicId, accesstoken: accesstoken}), {headers: this.headers})
+    return this.http.post(`${BASE_API_URL}/topic_collect/de_collect`, JSON.stringify({ topic_id: topicId, accesstoken: accesstoken }), { headers: this.headers })
+      .map(res => res.json())
+  }
+  createReply(accesstoken: string, reply_id: string, topic_id: string, content: string): Observable<any> {
+    return this.http.post(`${BASE_API_URL}/topic/${topic_id}/replies`, JSON.stringify({ accesstoken: accesstoken, content : content , reply_id: reply_id }), { headers: this.headers })
       .map(res => res.json())
   }
 }

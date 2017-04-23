@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { TopicDetail, AUTH_TOKEN_KEY } from "../../domain/entities"
+import { TopicDetail, AUTH_TOKEN_KEY, Replies } from "../../domain/entities"
 import { MdlSnackbarService } from "angular2-mdl"
 
 @Component({
@@ -13,19 +13,22 @@ export class DetailComponent implements OnInit {
   detail: TopicDetail = null;
   private _authToken: string;
   isCollect: boolean;
-
+  content: string;
   get authToken(): string {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
   }
 
   constructor( @Inject('topics') private topicSevice,
-    @Inject('user') private userSevice,
     private route: ActivatedRoute,
     private MdlSnackbarService: MdlSnackbarService,
+    @Inject('user') private userService,
     private router: Router) { }
 
   ngOnInit() {
+    this.getTopicDetail();
+  }
+  getTopicDetail() {
     this.route.params.pluck("id").switchMap(id => {
       return this.topicSevice.getTopicDetailById(id, this.authToken)
     }).subscribe(({ data }) => {
@@ -34,7 +37,15 @@ export class DetailComponent implements OnInit {
     })
   }
   collectTopic(topicId: string) {
-    this.topicSevice.collectTopicById(topicId, this.authToken).subscribe(res => {
+    //todo fix login in bug
+    let user$ = this.userService.getUserInfo();
+    user$.do(user => {
+      if (user === null) {
+        this.MdlSnackbarService.showToast("您还没有登录，请先登录")
+      }
+    }).filter(user => user !== null).switchMap(() => {
+      return this.topicSevice.collectTopicById(topicId, this.authToken)
+    }).subscribe(res => {
       if (res.success) {
         this.isCollect = true;
         this.MdlSnackbarService.showToast("已收藏")
@@ -44,9 +55,29 @@ export class DetailComponent implements OnInit {
   deCollectTopic(topicId: string) {
     this.topicSevice.deCollectTopicById(topicId, this.authToken).subscribe(res => {
       if (res.success) {
-         this.isCollect = false;
-         this.MdlSnackbarService.showToast("已取消收藏")
+        this.isCollect = false;
+        this.MdlSnackbarService.showToast("已取消收藏")
       }
+    })
+  }
+  submitReply(event) {
+    this.topicSevice.createReply(this.authToken, event.replyId, this.detail.id, event.reply).subscribe(res => {
+      if (res.success) {
+        this.MdlSnackbarService.showToast("回复成功")
+        this.getTopicDetail();
+      }
+    })
+  }
+  onSubmit() {
+    this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content).subscribe(res => {
+      if (res.success) {
+        this.MdlSnackbarService.showToast("回复成功");
+        this.content = "";
+        this.getTopicDetail();
+      }
+    }, ({ _body }) => {
+      let error = JSON.parse(_body);
+      this.MdlSnackbarService.showToast(error.error_msg);
     })
   }
 }

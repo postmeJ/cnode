@@ -6,6 +6,7 @@ import { TopicsService } from "./topics.service";
 import { DetailComponent } from './detail/detail.component';
 import { ReplyComponent } from './reply/reply.component';
 import { ReplyItemComponent } from './reply/reply-item/reply-item.component';
+import { ReplyService } from "./reply/reply.service"
 
 @NgModule({
     imports: [
@@ -22,6 +23,10 @@ import { ReplyItemComponent } from './reply/reply-item/reply-item.component';
         {
             provide: 'topics',
             useClass: TopicsService
+        },
+        {
+            provide: 'reply',
+            useClass: ReplyService
         }
     ]
 })

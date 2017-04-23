@@ -19,7 +19,8 @@
 
 .reply-item .reply-item-op {
     max-width: 10rem;
-    display: flex
+    display: flex;
+    align-items: center
 }
 .create-at {
     text-align: center

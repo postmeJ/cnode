@@ -16,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if (this.authToken) {
-      localStorage.setItem(AUTH_TOKEN_KEY, "");
+      localStorage.clear();
+      sessionStorage.clear();
     }
   }
   onSubmit(): void {
