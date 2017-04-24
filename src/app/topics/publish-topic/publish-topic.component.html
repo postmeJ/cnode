@@ -1,0 +1,14 @@
+<app-header title="发布帖子">
+</app-header>
+<div class="publish-topic-container">
+  <form (ngSubmit)="onSubmit()">
+    <app-select [list]="topicTypes" placeholder="请选择主题" (onSelect)="getSelectValue($event)"></app-select>
+    <mdl-textfield type="text" label="标题..." name="title" floating-label [(ngModel)]="title" #titleRef="ngModel">
+    </mdl-textfield>
+    <mdl-textfield type="text" label="内容..." name="content" floating-label [(ngModel)]="content" #contentRef="ngModel">
+    </mdl-textfield>
+    <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+      发布
+    </button>
+  </form>
+</div>

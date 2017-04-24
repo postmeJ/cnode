@@ -13,13 +13,19 @@ export class ReplyItemComponent implements OnInit {
   @Output() onReplyTriggered = new EventEmitter<string>();
   private user: User = JSON.parse(sessionStorage.getItem(USER_INFO_KEY));
 
-  constructor( @Inject('reply') private replySevice, private MdlSnackbarService: MdlSnackbarService) {
+  constructor( @Inject('reply') private replySevice, private MdlSnackbarService: MdlSnackbarService, @Inject('user') private userService) {
   }
 
   ngOnInit() {
   }
   onStar(reply_id: string) {
-    this.replySevice.toStar(reply_id).subscribe(res => {
+    this.userService.getUserInfo().do(user => {
+      if (user === null) {
+        this.MdlSnackbarService.showToast("您还没有登录，请先登录");
+      }
+    }).filter(user => user !== null).switchMap(() => {
+      return this.replySevice.toStar(reply_id);
+    }).subscribe(res => {
       if (res.action === "up") {
         this.item.is_uped = true;
         this.item.ups = [...this.item.ups, this.user.id.toString()];
@@ -32,7 +38,7 @@ export class ReplyItemComponent implements OnInit {
         let error = JSON.parse(_body);
         this.MdlSnackbarService.showToast(error.error_msg)
       }
-    )
+      )
   }
   onReply(reply_id: string) {
     this.onReplyTriggered.emit(reply_id);

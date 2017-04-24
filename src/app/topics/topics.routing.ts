@@ -3,6 +3,7 @@ import { TopicsComponent } from "./topics.component"
 import { DetailComponent } from "./detail/detail.component"
 import { NgModule } from "@angular/core"
 import { AuthGuardService } from "../core/auth-guard.service"
+import { PublishTopicComponent } from "./publish-topic/publish-topic.component"
 
 const routes: Routes = [
     {
@@ -12,6 +13,11 @@ const routes: Routes = [
     {
         path: 'detail/:id',
         component: DetailComponent
+    },
+    {
+        path: 'publish',
+        component: PublishTopicComponent,
+        canActivate: [AuthGuardService]
     }
 ]
 

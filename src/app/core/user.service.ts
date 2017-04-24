@@ -15,6 +15,7 @@ export class UserService {
   constructor(private http: Http) {
     let user = JSON.parse(sessionStorage.getItem(USER_INFO_KEY));
     this.subject.next(user);
+    this.subject.complete(); //防止多次subject.next
   }
 
   findUser(accessToken: string): Observable<User> {
@@ -23,6 +24,7 @@ export class UserService {
     }).do(user => {
       sessionStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
       this.subject.next(user);
+      this.subject.complete();
     }).publishReplay(1)
       .refCount();
   }

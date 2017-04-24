@@ -37,7 +37,6 @@ export class DetailComponent implements OnInit {
     })
   }
   collectTopic(topicId: string) {
-    //todo fix login in bug
     let user$ = this.userService.getUserInfo();
     user$.do(user => {
       if (user === null) {
@@ -69,7 +68,13 @@ export class DetailComponent implements OnInit {
     })
   }
   onSubmit() {
-    this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content).subscribe(res => {
+    this.userService.getUserInfo().do(user => {
+      if (user === null) {
+        this.MdlSnackbarService.showToast("您还没有登录，请先登录")
+      }
+    }).filter(user => user !== null).switchMap(() => {
+       return this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content);
+    }).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast("回复成功");
         this.content = "";

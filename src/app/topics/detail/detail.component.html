@@ -38,3 +38,6 @@
     </button>
   </form>
 </div>
+<div *ngIf="!detail" class="loading">
+  <mdl-spinner [active]="true"></mdl-spinner>
+</div>

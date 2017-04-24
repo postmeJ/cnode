@@ -26,7 +26,11 @@ export class TopicsService {
       .map(res => res.json())
   }
   createReply(accesstoken: string, reply_id: string, topic_id: string, content: string): Observable<any> {
-    return this.http.post(`${BASE_API_URL}/topic/${topic_id}/replies`, JSON.stringify({ accesstoken: accesstoken, content : content , reply_id: reply_id }), { headers: this.headers })
+    return this.http.post(`${BASE_API_URL}/topic/${topic_id}/replies`, JSON.stringify({ accesstoken: accesstoken, content: content, reply_id: reply_id }), { headers: this.headers })
       .map(res => res.json())
+  }
+  publishTopic(accesstoken: string, title: string, tab: string, content: string): Observable<any> {
+    return this.http.post(`${BASE_API_URL}/topics`, JSON.stringify({ accesstoken, title, tab, content }), {headers: this.headers})
+      .map(res => res.json());
   }
 }

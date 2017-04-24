@@ -24,3 +24,8 @@
     border-radius: 50%;
     max-height: 6rem
 }
+.create-topic {
+    position: fixed;
+    bottom:2rem;
+    right: 2rem;
+}

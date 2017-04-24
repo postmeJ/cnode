@@ -6,7 +6,8 @@ import { TopicsService } from "./topics.service";
 import { DetailComponent } from './detail/detail.component';
 import { ReplyComponent } from './reply/reply.component';
 import { ReplyItemComponent } from './reply/reply-item/reply-item.component';
-import { ReplyService } from "./reply/reply.service"
+import { ReplyService } from "./reply/reply.service";
+import { PublishTopicComponent } from './publish-topic/publish-topic.component'
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { ReplyService } from "./reply/reply.service"
         DetailComponent,
         ReplyComponent,
         ReplyItemComponent,
+        PublishTopicComponent,
     ],
     providers:[
         {
