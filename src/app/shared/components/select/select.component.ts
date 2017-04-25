@@ -29,7 +29,6 @@ export class SelectComponent implements OnInit {
   @Output() onSelect = new EventEmitter<any>();
   constructor() { }
 
-
   ngOnInit() {
   }
   toggleSelect() {

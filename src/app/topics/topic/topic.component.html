@@ -1,0 +1,17 @@
+<div class="list-item" (click)="clicked()">
+  <img [src]="topic.author.avatar_url" alt="">
+  <div class="item-content">
+    <div class="item-content-header">
+      <span *ngIf="topic.good" class="good">精</span>
+      <span *ngIf="topic.top" class="top">顶</span>
+    </div>
+    <div class="item-content-body">
+      <h5>{{topic.title}}</h5>
+    </div>
+    <div class="item-content-footer">
+      <span>{{topic.reply_count}}/{{topic.visit_count}}</span>
+      <span>{{topic.tab | filterCategory}}</span>
+      <span>{{topic.create_at | fromNow}}</span>
+    </div>
+  </div>
+</div>

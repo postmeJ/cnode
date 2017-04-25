@@ -1,0 +1,36 @@
+.list-item {
+    display: flex;
+    align-items: center
+}
+.list-item img {
+    height: 3rem;
+    margin: 0 .5rem;
+    border-radius: 50%;
+}
+
+.item-content {
+    flex: 1;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5
+}
+.good {
+    font-weight: bold;
+    color: #ff8400;
+    font-size: 16px
+}
+.top {
+    font-weight: bold;
+    color: #e22;
+    font-size: 16px;
+}
+.item-content .item-content-footer{
+    display: flex;
+    justify-content: space-between;
+    color: #999
+}
+.item-content .item-content-footer span {
+    flex: 1
+}
+h5 {
+    margin: 8px 0
+}

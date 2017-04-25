@@ -29,3 +29,11 @@
     bottom:2rem;
     right: 2rem;
 }
+
+.loading {
+    margin-top: 2rem;
+    text-align: center
+}
+.mdl-layout-title {
+    min-height: auto;
+}

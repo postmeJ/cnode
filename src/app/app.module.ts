@@ -10,10 +10,12 @@ import { ProfileModule } from "./profile/profile.module"
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

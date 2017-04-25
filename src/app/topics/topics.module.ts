@@ -7,7 +7,9 @@ import { DetailComponent } from './detail/detail.component';
 import { ReplyComponent } from './reply/reply.component';
 import { ReplyItemComponent } from './reply/reply-item/reply-item.component';
 import { ReplyService } from "./reply/reply.service";
-import { PublishTopicComponent } from './publish-topic/publish-topic.component'
+import { PublishTopicComponent } from './publish-topic/publish-topic.component';
+import { TopicComponent } from './topic/topic.component';
+import { FilterCategoryPipe } from './topic/filter-category.pipe'
 
 @NgModule({
     imports: [
@@ -20,6 +22,8 @@ import { PublishTopicComponent } from './publish-topic/publish-topic.component'
         ReplyComponent,
         ReplyItemComponent,
         PublishTopicComponent,
+        TopicComponent,
+        FilterCategoryPipe,
     ],
     providers:[
         {
