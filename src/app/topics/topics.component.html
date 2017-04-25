@@ -1,6 +1,6 @@
-<div class="demo-container" mdl-shadow="8">
-  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="waterfall" (mdl-layout-tab-active-changed)="tabChanged($event)">
-    <mdl-layout-header>
+<div class="demo-container">
+  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="standard" (mdl-layout-tab-active-changed)="tabChanged($event)">
+    <mdl-layout-header mdl-shadow="2">
       <mdl-layout-header-row>
         <mdl-layout-title>Cnode 社区</mdl-layout-title>
         <mdl-layout-spacer></mdl-layout-spacer>
@@ -35,34 +35,34 @@
       </mdl-layout-title>
       <nav *ngIf="userDetail" class="mdl-navigation">
         <a class="mdl-navigation__link" [routerLink]="['/profile']">个人中心</a>
-        <a class="mdl-navigation__link">我的消息</a>
+        <a class="mdl-navigation__link" [routerLink]="['/message']">我的消息</a>
         <a class="mdl-navigation__link" [routerLink]="['/login']">退出</a>
       </nav>
 
     </mdl-layout-drawer>
     <mdl-layout-content>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="全部">
-        <div *ngIf="!loading">
+        <div>
           <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
         </div>
       </mdl-layout-tab-panel>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="精华">
-        <div *ngIf="!loading">
+        <div>
           <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
         </div>
       </mdl-layout-tab-panel>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="分享">
-        <div *ngIf="!loading">
+        <div>
           <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
         </div>
       </mdl-layout-tab-panel>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="问答">
-        <div *ngIf="!loading">
+        <div>
           <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
         </div>
       </mdl-layout-tab-panel>
       <mdl-layout-tab-panel mdl-layout-tab-panel-title="招聘">
-        <div *ngIf="!loading">
+        <div>
           <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
         </div>
       </mdl-layout-tab-panel>
