@@ -6,12 +6,12 @@ import { AuthGuardService } from "./core/auth-guard.service"
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'topics/ALL',
+        redirectTo: 'topics',
         pathMatch: 'full'
     },
     {
         path: 'topics',
-        redirectTo: 'topics/ALL' ,
+        redirectTo: 'topics' ,
         canLoad: [AuthGuardService]
     }
 ];

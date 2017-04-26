@@ -1,4 +1,42 @@
-<app-header title="消息中心"></app-header>
 <div class="content">
-  message page
+  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="standard" (mdl-layout-tab-active-changed)="tabChanged($event)">
+    <mdl-layout-header mdl-shadow="2">
+      <app-header title="消息中心"></app-header>
+    </mdl-layout-header>
+
+    <mdl-layout-content>
+      <mdl-layout-tab-panel mdl-layout-tab-panel-title="未读消息">
+        <div>
+          <ul>
+            <li *ngFor="let unreadMsg of unreadMessages">
+              <app-msg-item [msg]="unreadMsg" (onClick)="makeMessage(unreadMsg.id, unreadMsg.topic.id)"></app-msg-item>
+            </li>
+          </ul>
+          <div class="content-center" *ngIf="!loading && unreadMessages.length > 0">
+            <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple (click)="makeAll()">
+              清空未读消息
+            </button>
+          </div>
+          <div class="content-center" *ngIf="unreadMessages.length == 0 && !loading">
+            暂无未读消息
+          </div>
+        </div>
+      </mdl-layout-tab-panel>
+      <mdl-layout-tab-panel mdl-layout-tab-panel-title="已读消息">
+        <div>
+          <ul>
+            <li *ngFor="let readMsg of readMessages">
+              <app-msg-item [msg]="readMsg" (onClick)="gotoDetail(readMsg.topic.id)"></app-msg-item>
+            </li>
+          </ul>
+          <div class="content-center" *ngIf="readMessages.length == 0 && !loading">
+            暂无已读消息
+          </div>
+        </div>
+      </mdl-layout-tab-panel>
+      <div *ngIf="loading" class="loading">
+        <mdl-spinner [active]="true"></mdl-spinner>
+      </div>
+    </mdl-layout-content>
+  </mdl-layout>
 </div>

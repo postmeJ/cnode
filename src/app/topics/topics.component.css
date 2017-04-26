@@ -37,3 +37,6 @@
 .mdl-layout-title {
     min-height: auto;
 }
+.mdl-button--icon {
+    overflow: visible
+}

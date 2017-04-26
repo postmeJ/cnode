@@ -5,9 +5,9 @@
         <mdl-layout-title>Cnode 社区</mdl-layout-title>
         <mdl-layout-spacer></mdl-layout-spacer>
         <!-- Navigation. We hide it in small screens. -->
-        <button mdl-button="" mdl-button-type="icon" ng-reflect-mdl-button-type="icon" class="mdl-button mdl-button--icon">
-         <mdl-icon class="material-icons">message</mdl-icon>
-        </button>
+        <a mdl-button="" mdl-button-type="icon" [routerLink]="['/message']" ng-reflect-mdl-button-type="icon" class="mdl-button mdl-button--icon">
+         <mdl-icon class="material-icons" [mdl-badge]="msgCount" mdl-badge-overlap>message</mdl-icon>
+        </a>
       </mdl-layout-header-row>
     </mdl-layout-header>
     <mdl-layout-drawer>
@@ -36,7 +36,7 @@
       <nav *ngIf="userDetail" class="mdl-navigation">
         <a class="mdl-navigation__link" [routerLink]="['/profile']">个人中心</a>
         <a class="mdl-navigation__link" [routerLink]="['/message']">我的消息</a>
-        <a class="mdl-navigation__link" [routerLink]="['/login']">退出</a>
+        <a class="mdl-navigation__link" [routerLink]="['/login']">退出登录</a>
       </nav>
 
     </mdl-layout-drawer>

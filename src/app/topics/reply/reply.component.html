@@ -1,6 +1,6 @@
 <ul class="reply-list">
   <li *ngFor="let reply of replys">
-    <app-reply-item [item]="reply" (onReplyTriggered)="onReplyTriggered($event)">
+    <app-reply-item [item]="reply" (onReplyTriggered)="onReplyTriggered($event, reply.author)">
     </app-reply-item>
   </li>
 </ul>

@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { UserDetails, Topic } from "../domain/entities"
-import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent } from "angular2-mdl"
+import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, ViewChild } from '@angular/core';
+import { UserDetails, Topic, AUTH_TOKEN_KEY } from "../domain/entities"
+import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent, MdlSnackbarService } from "angular2-mdl"
 import { Router } from "@angular/router"
 import { Observable, Subject } from 'rxjs/Rx'
 
@@ -15,11 +15,33 @@ export class TopicsComponent implements OnInit {
   private pageIndex: number = 1;
   private limit: number = 10;
   private loading: boolean = false;
-  constructor( @Inject('user') private userService, @Inject('topics') private topicsService, private router: Router) { }
+  private msgCount: number = 0;
+  private _authToken: string;
+  get authToken(): string {
+    this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
+    return this._authToken;
+  }
   @ViewChildren(MdlLayoutTabPanelComponent) tabs: QueryList<MdlLayoutTabPanelComponent>
   @ViewChild(MdlLayoutContentComponent) layContent: MdlLayoutContentComponent
+
+  constructor( @Inject('user') private userService,
+    @Inject('topics') private topicsService,
+    @Inject('message') private messageService,
+    private router: Router,
+    private MdlSnackbarService: MdlSnackbarService) { }
+
   ngOnInit() {
     this.getUserDetail();
+    this.getMsgCount();
+  }
+  getMsgCount() {
+    this.userService.getUserInfo().filter(user => user !== null).switchMap(() => {
+      return this.messageService.getUnreadMessageCount(this.authToken);
+    }).subscribe(res => {
+      if (res.success) {
+        this.msgCount = res.data;
+      }
+    });
   }
   getUserDetail(): void {
     this.userService.getUserInfo().filter(user => user != null).pluck("loginname").switchMap(name => {

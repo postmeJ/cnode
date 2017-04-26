@@ -1,0 +1,19 @@
+app-header {
+    margin-bottom: 3px;
+}
+
+.loading {
+    margin-top: 2rem;
+    text-align: center
+}
+
+ul,
+ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.content-center {
+    text-align: center;
+    margin-top: 1rem;
+}

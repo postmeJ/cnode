@@ -26,17 +26,18 @@ export class ReplyComponent implements OnInit {
   ngOnInit() {
   }
 
-  onReplyTriggered(id: string) {
+  onReplyTriggered(id: string, author: any): void {
     this.userService.getUserInfo().do(user => {
       if (user === null) {
         this.MdlSnackbarService.showToast("您还没有登录，请先登录");
       }
-    }).filter(user => user !== null).subscribe(() => {
+    }).filter(user => user !== null).subscribe((user) => {
       this.replyId = id;
+      this.reply = `@${author.loginname}`;
       this.replyDialog.show()
     })
   }
-  submitReply() {
+  submitReply(): void {
     if (!this.reply) {
       this.MdlSnackbarService.showToast("评论不能为空");
       return;
@@ -48,10 +49,10 @@ export class ReplyComponent implements OnInit {
     this.replyDialog.close();
     this.reply = "";
   }
-  public onDialogShow(dialogRef: MdlDialogReference) {
+  public onDialogShow(dialogRef: MdlDialogReference): void {
     this.tfName.setFocus();
   }
 
-  public onDialogHide() {
+  public onDialogHide(): void {
   }
 }

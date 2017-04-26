@@ -88,3 +88,8 @@ p {
     margin-top: 2rem;
     text-align: center
 }
+
+.reply-form {
+    text-align: center;
+    padding-bottom: 1rem;
+}

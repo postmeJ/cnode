@@ -1,0 +1,8 @@
+<a class="msg-item" (click)="clicked()">
+  <img [src]="msg.author.avatar_url" alt="">
+  <div class="msg-item-body">
+    <p class="msg-item-body-h"><span>{{msg.author.loginname}}</span><span>{{msg.reply.create_at | fromNow}}</span></p>
+    <div class="msg-item-body-b" [innerHtml]="msg.reply.content"></div>
+    <p class="msg-item-body-f">主题: {{msg.topic.title}}</p>
+  </div>
+</a>

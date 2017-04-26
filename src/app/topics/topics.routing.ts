@@ -7,7 +7,7 @@ import { PublishTopicComponent } from "./publish-topic/publish-topic.component"
 
 const routes: Routes = [
     {
-        path: 'topics/:filter',
+        path: 'topics',
         component: TopicsComponent,
     },
     {
