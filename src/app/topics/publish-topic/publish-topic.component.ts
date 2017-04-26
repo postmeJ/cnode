@@ -47,7 +47,7 @@ export class PublishTopicComponent implements OnInit {
     this.topicService.publishTopic(this.authToken, this.title, this.topicType.value, this.content).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast("发表成功");
-        this.router.navigate(['topics/ALL']);
+        this.router.navigate(['topics']);
       }
     })
   }
