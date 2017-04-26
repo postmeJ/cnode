@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { UserDetails, User } from "../domain/entities"
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { Http } from "@angular/http"
 import { BASE_API_URL, Topics } from "../domain/entities"
 

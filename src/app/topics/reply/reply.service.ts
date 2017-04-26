@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BASE_API_URL, AUTH_TOKEN_KEY } from "../../domain/entities"
 import { Http, Headers } from "@angular/http";
-import { Observable, Subject } from 'rxjs/Rx'
+import { Observable } from 'rxjs/Rx'
 
 @Injectable()
 export class ReplyService {

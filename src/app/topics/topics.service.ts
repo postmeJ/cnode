@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx'
+import { Observable } from 'rxjs/Rx'
 import { Http, Headers } from "@angular/http"
 import { UserDetails, User, BASE_API_URL, TopicDetail, Topic } from "../domain/entities"
 

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from "@angular/http";
 import { User, BASE_API_URL, USER_INFO_KEY, UserDetails } from "../domain/entities"
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
 
 @Injectable()
 export class UserService {

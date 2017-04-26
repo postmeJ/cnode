@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
 import { ReplaySubject, Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import { Auth, REDIRECT_URL } from '../domain/entities';
 
 @Injectable()

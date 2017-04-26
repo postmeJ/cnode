@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
 
-A cnode community developed using the Angular2 + TypeScript + Rxjs technology
+A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technology
 
 ## Preview
 
