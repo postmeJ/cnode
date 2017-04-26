@@ -13,10 +13,6 @@ const routes: Routes = [
         path: 'topics',
         redirectTo: 'topics' ,
         canLoad: [AuthGuardService]
-    },
-    {
-        path: '**',
-        redirectTo: 'topics'
     }
 ];
 
