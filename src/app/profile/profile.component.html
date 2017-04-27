@@ -29,7 +29,7 @@
       </div>
       <div mdl-shadow="2">
         <h6 class="title">最近创建的话题</h6>
-        <mdl-list *ngIf="userDetails.recent_topics > 0">
+        <mdl-list *ngIf="userDetails.recent_topics.length > 0">
           <mdl-list-item *ngFor="let topics of userDetails.recent_topics">
             <mdl-list-item-primary-content>
               <mdl-list-item-text-body>
