@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: Http) {
     let user = JSON.parse(sessionStorage.getItem(USER_INFO_KEY));
     this.subject.next(user);
-    this.subject.complete(); //防止多次subject.next
+    this.subject.complete(); 
   }
 
   findUser(accessToken: string): Observable<User> {
@@ -26,7 +26,10 @@ export class UserService {
     }).publishReplay(1)
       .refCount();
   }
-
+  //清空用户信息
+  clearUserInfo(): void {
+    this.subject.next(null);
+  }
   getUserInfo(): Observable<User> {
     return this.subject.asObservable();
   }

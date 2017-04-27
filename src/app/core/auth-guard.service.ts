@@ -8,7 +8,7 @@ import {
   RouterStateSnapshot,
   Route
 } from '@angular/router';
-import { AUTH_TOKEN_KEY, REDIRECT_URL } from "../domain/entities"
+import { AUTH_TOKEN_KEY, REDIRECT_URL, USER_INFO_KEY } from "../domain/entities"
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild {
@@ -22,6 +22,12 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
   }
+
+  private _userInfo: any;
+  get userInfo() {
+    return this._userInfo = sessionStorage.getItem(USER_INFO_KEY)
+  }
+
   constructor(private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -33,7 +39,7 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
     return this.checkLogin();
   }
   checkLogin(url?: string): boolean {
-    if (this.authToken) {
+    if (this.authToken && this.userInfo != null) {
       return true;
     }
 

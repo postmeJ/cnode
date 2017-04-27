@@ -12,13 +12,17 @@ export class LoginComponent implements OnInit {
   accessToken: string;
   authToken: string = localStorage.getItem(AUTH_TOKEN_KEY);
   auth: Auth;
-  constructor( @Inject('auth') private service, private router: Router, private mdlSnackbarService: MdlSnackbarService) { }
+  constructor( @Inject('auth') private service, 
+    private router: Router, 
+    private mdlSnackbarService: MdlSnackbarService,
+    @Inject('user') private userService) { }
 
   ngOnInit() {
     if (this.authToken) {
       localStorage.clear();
       sessionStorage.clear();
     }
+    this.userService.clearUserInfo();
   }
   onSubmit(): void {
     if (!this.accessToken) {

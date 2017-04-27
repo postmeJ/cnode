@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, View
 import { UserDetails, Topic, AUTH_TOKEN_KEY } from "../domain/entities"
 import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent, MdlSnackbarService } from "angular2-mdl"
 import { Router } from "@angular/router"
-import { Observable, Subject } from 'rxjs/Rx'
+import { Observable } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-topics',
