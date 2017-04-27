@@ -8,6 +8,30 @@ A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technol
 
 https://riyueweiyi.github.io/cnode-pro
 
+## Project structure
+
++---app                         // 工程目录
+|   +---core                    // 核心服务（路由控制，用户验证，消息服务）
+|   +---domain                  // 模型，常量
+|   +---login                   // 登录模块（路由，module， 组件，样式）
+|   +---message                 // 消息模块
+|   |   \---msg-item
+|   +---profile                 // 个人主页
+|   +---shared                  // 全局模块（组件，过滤器）
+|   |   +---components          // components
+|   |   |   +---header
+|   |   |   \---select
+|   |   \---pice                // pice
+|   \---topics                  // 主题模块
+|       +---detail              // 主题详情
+|       +---publish-topic       // 发布主题
+|       +---reply               // 主题评论
+|       |   \---reply-item
+|       \---topic
++---assets                      // 公共资源              
+\---environments
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
