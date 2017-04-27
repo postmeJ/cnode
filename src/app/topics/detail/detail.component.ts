@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, trigger, state, style, transition, animate } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { TopicDetail, AUTH_TOKEN_KEY, Replies } from "../../domain/entities"
 import { MdlSnackbarService } from "angular2-mdl"
@@ -7,7 +7,22 @@ import { MdlSnackbarService } from "angular2-mdl"
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('animated', [
+      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
+      transition('void => *', [
+        style({ transform: 'translateY(50px)', opacity: 0 }),
+        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
+      ]),
+      transition('* => void', [
+        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
+          transform: 'translateY(-50px)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class DetailComponent implements OnInit {
   detail: TopicDetail = null;
@@ -73,7 +88,7 @@ export class DetailComponent implements OnInit {
         this.MdlSnackbarService.showToast("您还没有登录，请先登录")
       }
     }).filter(user => user !== null).switchMap(() => {
-       return this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content);
+      return this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content);
     }).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast("回复成功");

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject, animate, transition, trigger, state, style } from '@angular/core';
 import { Router } from "@angular/router"
 import { MdlLayoutTabPanelComponent } from "angular2-mdl"
 import { Message, AUTH_TOKEN_KEY } from "../domain/entities"
@@ -6,7 +6,22 @@ import { Message, AUTH_TOKEN_KEY } from "../domain/entities"
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.css']
+  styleUrls: ['./message.component.css'],
+  animations: [
+    trigger('animated', [
+      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
+      transition('void => *', [
+        style({ transform: 'translateY(-50px)', opacity: 0 }),
+        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
+      ]),
+      transition('* => void', [
+        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
+          transform: 'translateY(50px)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class MessageComponent implements OnInit {
   @ViewChildren(MdlLayoutTabPanelComponent) tabs: QueryList<MdlLayoutTabPanelComponent>

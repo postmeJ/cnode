@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, transition, trigger, animate, state, style } from '@angular/core';
 import { MdlSnackbarService } from "angular2-mdl"
 import { AUTH_TOKEN_KEY } from "../../domain/entities"
 import { Router } from '@angular/router';
@@ -6,7 +6,22 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-publish-topic',
   templateUrl: './publish-topic.component.html',
-  styleUrls: ['./publish-topic.component.css']
+  styleUrls: ['./publish-topic.component.css'],
+  animations: [
+    trigger('animated', [
+     state('*', style({transform: 'translateX(0)', opacity: 1})),
+     transition('void => *', [
+        style({transform: 'translateX(50px)', opacity: 0}),
+        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
+      ]),
+      transition('* => void', [
+         animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
+          transform: 'translateX(-50px)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class PublishTopicComponent implements OnInit {
   topicTypes: [any] = [
