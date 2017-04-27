@@ -8,7 +8,7 @@ body {
   position: relative;
   width: 300px;
   box-sizing: border-box;
-  margin-top: 15px
+  margin: 15px auto 0 auto
 }
 
 .select-wrapper ul {

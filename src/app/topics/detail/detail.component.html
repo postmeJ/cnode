@@ -33,9 +33,11 @@
   <form (ngSubmit)="onSubmit()" class="reply-form">
     <mdl-textfield type="text" label="回复..." name="content" floating-label [(ngModel)]="content" #accessTokenRef="ngModel">
     </mdl-textfield>
-    <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
-      提交
-    </button>
+    <div>
+      <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+        提交
+      </button>
+    </div>
   </form>
 </div>
 <div *ngIf="!detail" class="loading">
