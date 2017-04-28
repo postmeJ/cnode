@@ -44,8 +44,8 @@ h2 {
 h3 {
     font-size: 2rem;
 }
-.markdown-text pre code,
-p {
+app-detail .markdown-text pre code,
+app-detail p {
     font-size: 16px;
 }
 .markdown-body { 

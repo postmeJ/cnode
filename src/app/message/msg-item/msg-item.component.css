@@ -6,7 +6,7 @@
 .msg-item img {
     height: 4rem;
     border-radius: 50%;
-    margin: 0 .5rem;
+    margin: 0 1rem;
 }
 .msg-item p {
     margin-bottom: 0px;
@@ -18,10 +18,15 @@
 .msg-item-body {
     flex: 1;
     border-bottom: 1px solid #e5e5e5;
-    padding: .5rem 0
+    padding: .5rem 0;
+    max-width: calc(100% - 7rem);
+    box-sizing: border-box;
 }
 .msg-item-body-h,
 .msg-item-body-f {
     font-weight: bold;
     font-size: 14px
+}
+.msg-item-body-b {
+    overflow: hidden;
 }

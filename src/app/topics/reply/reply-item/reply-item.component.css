@@ -1,7 +1,8 @@
 .reply-item {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #e5e5e5
+    border-bottom: 1px solid #e5e5e5;
+    justify-content: space-between
 }
 
 .reply-item .reply-item-img {
@@ -12,15 +13,16 @@
 }
 .reply-item .reply-item-content {
     flex: 1;
-    max-width: 50%;
+    max-width: calc(100% - 13rem);
     overflow: hidden;
 }
 .reply-item-footer {
-    color: #999
+    color: #999;
+    max-width: 7rem;
+    margin-right: 1rem;
 }
 
 .reply-item .reply-item-op {
-    max-width: 10rem;
     display: flex;
     align-items: center
 }

@@ -8,14 +8,14 @@ import { UserDetails, Topics } from "../domain/entities"
   styleUrls: ['./profile.component.css'],
   animations: [
     trigger('animated', [
-      state('*', style({ transform: 'translateX(0)', opacity: 1 })),
+      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
       transition('void => *', [
-        style({ transform: 'translateX(-50px)', opacity: 0 }),
+        style({ transform: 'translateY(50px)', opacity: 0 }),
         animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
       ]),
       transition('* => void', [
         animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
-          transform: 'translateX(50px)',
+          transform: 'translateY(-50px)',
           opacity: 0
         }))
       ])
