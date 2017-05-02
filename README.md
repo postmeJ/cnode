@@ -8,6 +8,140 @@ A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technol
 
 https://riyueweiyi.github.io/cnode-pro
 
+## Project 
+
+├─ e2e             //End-to-end test code directory
+│  ├─ app.e2e-spec.ts
+│  ├─ app.po.ts
+│  └─ tsconfig.e2e.json
+├─ src            //Source code
+│  ├─ app         //Application directory
+│  │  ├─ core     //Core service module
+│  │  │  ├─ auth-guard.service.spec.ts
+│  │  │  ├─ auth-guard.service.ts
+│  │  │  ├─ auth.service.spec.ts
+│  │  │  ├─ auth.service.ts
+│  │  │  ├─ core.module.ts
+│  │  │  ├─ message.service.spec.ts
+│  │  │  ├─ message.service.ts
+│  │  │  ├─ user.service.spec.ts
+│  │  │  └─ user.service.ts
+│  │  ├─ domain  //Model and constant definition
+│  │  │  └─ entities.ts
+│  │  ├─ login  //Login module
+│  │  │  ├─ login.component.css
+│  │  │  ├─ login.component.html
+│  │  │  ├─ login.component.spec.ts
+│  │  │  ├─ login.component.ts
+│  │  │  ├─ login.module.ts
+│  │  │  └─ login.routing.ts
+│  │  ├─ message    //Message Center
+│  │  │  ├─ msg-item
+│  │  │  │  ├─ msg-item.component.css
+│  │  │  │  ├─ msg-item.component.html
+│  │  │  │  ├─ msg-item.component.spec.ts
+│  │  │  │  └─ msg-item.component.ts
+│  │  │  ├─ message.component.css
+│  │  │  ├─ message.component.html
+│  │  │  ├─ message.component.spec.ts
+│  │  │  ├─ message.component.ts
+│  │  │  ├─ message.mudule.ts
+│  │  │  └─ message.routing.ts
+│  │  ├─ profile    //Profile module
+│  │  │  ├─ profile.component.css
+│  │  │  ├─ profile.component.html
+│  │  │  ├─ profile.component.spec.ts
+│  │  │  ├─ profile.component.ts
+│  │  │  ├─ profile.module.ts
+│  │  │  ├─ profile.routing.ts
+│  │  │  ├─ profile.service.spec.ts
+│  │  │  └─ profile.service.ts
+│  │  ├─ shared     //Common component pipe directives
+│  │  │  ├─ components
+│  │  │  │  ├─ header
+│  │  │  │  │  ├─ header.component.css
+│  │  │  │  │  ├─ header.component.html
+│  │  │  │  │  ├─ header.component.spec.ts
+│  │  │  │  │  └─ header.component.ts
+│  │  │  │  └─ select
+│  │  │  │     ├─ select.component.css
+│  │  │  │     ├─ select.component.html
+│  │  │  │     ├─ select.component.spec.ts
+│  │  │  │     └─ select.component.ts
+│  │  │  ├─ directives
+│  │  │  │  └─ preview.directive.ts
+│  │  │  ├─ pice
+│  │  │  │  ├─ from-now.pipe.spec.ts
+│  │  │  │  └─ from-now.pipe.ts
+│  │  │  └─ shared.module.ts
+│  │  ├─ topics     //Topic Module
+│  │  │  ├─ detail  //Topic detail
+│  │  │  │  ├─ detail.component.css
+│  │  │  │  ├─ detail.component.html
+│  │  │  │  ├─ detail.component.spec.ts
+│  │  │  │  └─ detail.component.ts
+│  │  │  ├─ publish-topic   //Release topic
+│  │  │  │  ├─ publish-topic.component.css
+│  │  │  │  ├─ publish-topic.component.html
+│  │  │  │  ├─ publish-topic.component.spec.ts
+│  │  │  │  └─ publish-topic.component.ts
+│  │  │  ├─ reply   //Topic reply
+│  │  │  │  ├─ reply-item
+│  │  │  │  │  ├─ reply-item.component.css
+│  │  │  │  │  ├─ reply-item.component.html
+│  │  │  │  │  ├─ reply-item.component.spec.ts
+│  │  │  │  │  └─ reply-item.component.ts
+│  │  │  │  ├─ reply.component.css
+│  │  │  │  ├─ reply.component.html
+│  │  │  │  ├─ reply.component.spec.ts
+│  │  │  │  ├─ reply.component.ts
+│  │  │  │  ├─ reply.service.spec.ts
+│  │  │  │  └─ reply.service.ts
+│  │  │  ├─ topic
+│  │  │  │  ├─ filter-category.pipe.spec.ts
+│  │  │  │  ├─ filter-category.pipe.ts
+│  │  │  │  ├─ topic.component.css
+│  │  │  │  ├─ topic.component.html
+│  │  │  │  ├─ topic.component.spec.ts
+│  │  │  │  └─ topic.component.ts
+│  │  │  ├─ topics.component.css
+│  │  │  ├─ topics.component.html
+│  │  │  ├─ topics.component.spec.ts
+│  │  │  ├─ topics.component.ts
+│  │  │  ├─ topics.module.ts
+│  │  │  ├─ topics.routing.ts
+│  │  │  ├─ topics.service.spec.ts
+│  │  │  └─ topics.service.ts
+│  │  ├─ app.component.css      //The style file for the boot component
+│  │  ├─ app.component.html     //The HTML template of the boot component
+│  │  ├─ app.component.spec.ts  //Boot component test file
+│  │  ├─ app.component.ts   //System boot component
+│  │  ├─ app.module.ts      //Apply the root module
+│  │  └─ app.routing.ts     //Root routing module
+│  ├─ assets                //Site resource folder
+│  │  └─ .gitkeep
+│  ├─ environments
+│  │  ├─ environment.prod.ts //Production environment configuration file
+│  │  └─ environment.ts     //Environment configuration
+│  ├─ favicon.ico           //Site collection icon
+│  ├─ index.html            //Entry page
+│  ├─ main.ts               //Entry ts file
+│  ├─ polyfills.ts          //For the browser ability to enhance the polyfills reference file
+│  ├─ styles.scss           //Global style file
+│  ├─ test.ts               //Test the entry file
+│  ├─ tsconfig.app.json
+│  ├─ tsconfig.spec.json
+│  └─ typings.d.ts          //The TypeScript type used in the project defines the reference file
+├─ .angular-cli.json        //Angular Command line configuration
+├─ .editorconfig            //Editor configuration
+├─ .gitignore               //GitHub configuration
+├─ README.md
+├─ karma.conf.js            //Karma unit test configuration file
+├─ package.json             //Package file
+├─ protractor.conf.js       //End-to-end test profile (integration test)
+├─ tsconfig.json            //TypeScript configuration file
+├─ tslint.json              //Code Lint Static check configuration
+└─ yarn.lock
 
 ## Development server
 
