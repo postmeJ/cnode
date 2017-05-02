@@ -8,7 +8,11 @@ A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technol
 
 https://riyueweiyi.github.io/cnode-pro
 
-## Project 
+## What's included
+
+Within the project you'll find the following directories and files, You'll see something like this:
+
+```
 
 ├─ e2e             //End-to-end test code directory
 │  ├─ app.e2e-spec.ts
@@ -142,6 +146,8 @@ https://riyueweiyi.github.io/cnode-pro
 ├─ tsconfig.json            //TypeScript configuration file
 ├─ tslint.json              //Code Lint Static check configuration
 └─ yarn.lock
+
+```
 
 ## Development server
 
