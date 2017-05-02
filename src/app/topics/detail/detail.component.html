@@ -2,8 +2,8 @@
 </app-header>
 <div *ngIf="detail" class="content" [@animated]>
   <div class="theme-header">
-    <div class="info">
-      <img [src]="detail.author.avatar_url" alt="">
+    <div class="info"> 
+      <img [src]="detail.author.avatar_url" preview="4rem" alt="">
       <div class="collect">
         <p class="author">{{detail.author.loginname}}</p>
         <p *ngIf="isCollect" class="active">

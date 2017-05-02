@@ -20,10 +20,6 @@
 .no-login p {
     color: #fff;
 }
-.user-avatar img {
-    border-radius: 50%;
-    max-height: 6rem
-}
 .create-topic {
     position: fixed;
     bottom:2rem;

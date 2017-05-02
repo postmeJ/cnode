@@ -3,9 +3,7 @@
     align-items: center
 }
 .list-item img {
-    height: 3rem;
     margin: 0 .5rem;
-    border-radius: 50%;
 }
 
 .item-content {

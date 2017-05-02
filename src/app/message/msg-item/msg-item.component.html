@@ -1,5 +1,5 @@
 <a class="msg-item" (click)="clicked()">
-  <img [src]="msg.author.avatar_url" alt="">
+  <img [src]="msg.author.avatar_url" preview="4rem" alt="">
   <div class="msg-item-body">
     <p class="msg-item-body-h"><span>{{msg.author.loginname}}</span><span>{{msg.reply.create_at | fromNow}}</span></p>
     <div class="msg-item-body-b" [innerHtml]="msg.reply.content"></div>

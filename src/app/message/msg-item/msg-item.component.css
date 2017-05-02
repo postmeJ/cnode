@@ -4,8 +4,6 @@
 }
 
 .msg-item img {
-    height: 4rem;
-    border-radius: 50%;
     margin: 0 1rem;
 }
 .msg-item p {

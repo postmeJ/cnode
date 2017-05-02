@@ -6,10 +6,6 @@
     justify-content: center;
     margin-bottom: 1rem;
 }
-.user-avatar img {
-    border-radius: 50%;
-    max-height: 6rem
-}
 .content {
     padding: 0 1rem
 }
@@ -17,11 +13,6 @@
     margin-right: .5rem;
 }
 
-.content .author-avatar  {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-}
 mdl-list-item-text-body {
     display: flex;
     align-items: center;

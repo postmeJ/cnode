@@ -8,6 +8,11 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 export class UserService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private api_url = BASE_API_URL;
+  /*
+    replaySubject可以缓存过去的值，
+    这里只缓存一次，
+    subject.next(null)就清空了缓存值
+   */
   private subject: ReplaySubject<User> = new ReplaySubject<User>(1);
   private user: User;
   constructor(private http: Http) {

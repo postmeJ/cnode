@@ -3,7 +3,7 @@
   <div *ngIf="userDetails">
     <div class="user-card">
       <div class="user-avatar">
-        <img [src]="userDetails.avatar_url" alt="">
+        <img [src]="userDetails.avatar_url" preview="7rem" alt="">
       </div>
       <div class="login-name">{{userDetails.loginname}}</div>
       <div class="user-score">积分：{{userDetails.score}}</div>
@@ -18,7 +18,7 @@
             <mdl-list-item-primary-content>
               <mdl-list-item-text-body>
                 <a [routerLink]="['/detail/' + collect.id]">
-                  <img  class="author-avatar" [src]="collect.author.avatar_url" alt="">
+                  <img preview="3rem" class="author-avatar" [src]="collect.author.avatar_url" alt="">
                   {{collect.title}}
                  </a>
               </mdl-list-item-text-body>
@@ -34,7 +34,7 @@
             <mdl-list-item-primary-content>
               <mdl-list-item-text-body>
                 <a [routerLink]="['/detail/' + topics.id]">
-                  <img  class="author-avatar" [src]="topics.author.avatar_url" alt="">
+                  <img preview="3rem" class="author-avatar" [src]="topics.author.avatar_url" alt="">
                   {{topics.title}}
                 </a>
               </mdl-list-item-text-body>
@@ -50,7 +50,7 @@
             <mdl-list-item-primary-content>
               <mdl-list-item-text-body>
                 <a  [routerLink]="['/detail/' + replies.id]">
-                  <img class="author-avatar" [src]="replies.author.avatar_url" alt=""> 
+                  <img preview="3rem" class="author-avatar" [src]="replies.author.avatar_url" alt=""> 
                   {{replies.title}}
                 </a>
               </mdl-list-item-text-body>

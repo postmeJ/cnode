@@ -6,9 +6,6 @@
 }
 
 .reply-item .reply-item-img {
-    height: 3rem;
-    width: 3rem;
-    border-radius: 50%;
     margin: 0 1rem;
 }
 .reply-item .reply-item-content {
