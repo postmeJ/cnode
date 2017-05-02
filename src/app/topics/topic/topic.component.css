@@ -2,6 +2,7 @@
     display: flex;
     align-items: center
 }
+
 .list-item img {
     margin: 0 .5rem;
 }
@@ -9,26 +10,37 @@
 .item-content {
     flex: 1;
     padding: 1rem;
+    box-sizing: border-box;
+    max-width: calc(100% - 5rem);
     border-bottom: 1px solid #e5e5e5
 }
+
 .good {
     font-weight: bold;
     color: #ff8400;
     font-size: 16px
 }
+
 .top {
     font-weight: bold;
     color: #e22;
     font-size: 16px;
 }
-.item-content .item-content-footer{
+
+.item-content .item-content-footer {
     display: flex;
     justify-content: space-between;
     color: #999
 }
+
 .item-content .item-content-footer span {
     flex: 1
 }
-h5 {
-    margin: 8px 0
+
+.item-content .item-content-body {
+    overflow: hidden
+}
+
+.item-content .item-content-body h5 {
+    margin: 8px 0;
 }

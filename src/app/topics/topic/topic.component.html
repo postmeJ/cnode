@@ -1,6 +1,6 @@
 <div class="list-item" (click)="clicked()">
   <img [src]="topic.author.avatar_url" preview="4rem" alt="">
-  <div class="item-content">
+  <div class="item-content" *ngIf="topic.author.avatar_url">
     <div class="item-content-header">
       <span *ngIf="topic.good" class="good">精</span>
       <span *ngIf="topic.top" class="top">顶</span>
