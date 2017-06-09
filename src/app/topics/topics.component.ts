@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { UserDetails, Topic, AUTH_TOKEN_KEY } from "../domain/entities"
 import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent, MdlSnackbarService } from "angular2-mdl"
 import { Router } from "@angular/router"
-import { Observable } from 'rxjs/Rx'
+import { Observable, Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-topics',
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.css']
 })
-export class TopicsComponent implements OnInit {
+export class TopicsComponent implements OnInit, OnDestroy {
   userDetail: UserDetails = null;
   list: Topic[] = [];
   private pageIndex: number = 1;
@@ -17,6 +17,7 @@ export class TopicsComponent implements OnInit {
   private loading: boolean = false;
   private msgCount: number = 0;
   private _authToken: string;
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   get authToken(): string {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
@@ -37,7 +38,7 @@ export class TopicsComponent implements OnInit {
   getMsgCount() {
     this.userService.getUserInfo().filter(user => user !== null).switchMap(() => {
       return this.messageService.getUnreadMessageCount(this.authToken);
-    }).subscribe(res => {
+    }).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.msgCount = res.data;
       }
@@ -46,7 +47,7 @@ export class TopicsComponent implements OnInit {
   getUserDetail(): void {
     this.userService.getUserInfo().filter(user => user != null).pluck("loginname").switchMap(name => {
       return this.userService.findUserDetail(name);
-    }).subscribe(({ data }) => {
+    }).takeUntil(this._takeUntil$).subscribe(({ data }) => {
       this.userDetail = Object.assign({}, data);
     })
   }
@@ -75,7 +76,7 @@ export class TopicsComponent implements OnInit {
 
     this.list = [];
     this.loading = true;
-    this.topicsService.getTopicsList(this.pageIndex, this.limit, tab.title).subscribe(res => {
+    this.topicsService.getTopicsList(this.pageIndex, this.limit, tab.title).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.list = [...res.data];
         this.loading = false;
@@ -95,9 +96,13 @@ export class TopicsComponent implements OnInit {
     }).concatMap((tab) => {
       this.loading = true;
       return this.topicsService.getTopicsList(++this.pageIndex, this.limit, tab.title);
-    }).delay(500).subscribe((res: any) => {
-      this.list = [...this.list, ...res.data];
+    }).delay(500).takeUntil(this._takeUntil$).subscribe((res: any) => {
+      this.list.push(...res.data);
       this.loading = false;
     })
+  }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
   }
 }

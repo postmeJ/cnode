@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject, ViewEncapsulation, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, trigger, state, style, transition, animate, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { TopicDetail, AUTH_TOKEN_KEY, Replies } from "../../domain/entities"
 import { MdlSnackbarService } from "angular2-mdl"
+import { Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-detail',
@@ -24,7 +25,7 @@ import { MdlSnackbarService } from "angular2-mdl"
     ])
   ]
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
   detail: TopicDetail = null;
   private _authToken: string;
   isCollect: boolean;
@@ -33,6 +34,7 @@ export class DetailComponent implements OnInit {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
   }
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
 
   constructor( @Inject('topics') private topicSevice,
     private route: ActivatedRoute,
@@ -43,10 +45,14 @@ export class DetailComponent implements OnInit {
   ngOnInit() {
     this.getTopicDetail();
   }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
+  }
   getTopicDetail() {
     this.route.params.pluck("id").switchMap(id => {
       return this.topicSevice.getTopicDetailById(id, this.authToken)
-    }).subscribe(({ data }) => {
+    }).takeUntil(this._takeUntil$).subscribe(({ data }) => {
       this.detail = Object.assign({}, data);
       this.isCollect = data.is_collect;
     })
@@ -59,7 +65,7 @@ export class DetailComponent implements OnInit {
       }
     }).filter(user => user !== null).switchMap(() => {
       return this.topicSevice.collectTopicById(topicId, this.authToken)
-    }).subscribe(res => {
+    }).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.isCollect = true;
         this.MdlSnackbarService.showToast("已收藏")
@@ -67,7 +73,7 @@ export class DetailComponent implements OnInit {
     })
   }
   deCollectTopic(topicId: string) {
-    this.topicSevice.deCollectTopicById(topicId, this.authToken).subscribe(res => {
+    this.topicSevice.deCollectTopicById(topicId, this.authToken).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.isCollect = false;
         this.MdlSnackbarService.showToast("已取消收藏")
@@ -75,7 +81,7 @@ export class DetailComponent implements OnInit {
     })
   }
   submitReply(event) {
-    this.topicSevice.createReply(this.authToken, event.replyId, this.detail.id, event.reply).subscribe(res => {
+    this.topicSevice.createReply(this.authToken, event.replyId, this.detail.id, event.reply).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast("回复成功")
         this.getTopicDetail();
@@ -89,7 +95,7 @@ export class DetailComponent implements OnInit {
       }
     }).filter(user => user !== null).switchMap(() => {
       return this.topicSevice.createReply(this.authToken, '', this.detail.id, this.content);
-    }).subscribe(res => {
+    }).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast("回复成功");
         this.content = "";

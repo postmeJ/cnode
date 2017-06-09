@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, Inject, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Replies } from "../../domain/entities"
 import { MdlTextFieldComponent, MdlDialogReference, MdlSnackbarService, MdlDialogComponent } from "angular2-mdl"
+import { Subject } from 'rxjs/Rx'
+
 @Component({
   selector: 'app-reply',
   templateUrl: './reply.component.html',
   styleUrls: ['./reply.component.css']
 })
-export class ReplyComponent implements OnInit {
+export class ReplyComponent implements OnInit, OnDestroy {
   reply: string;
   @ViewChild('replyDialog') replyDialog: MdlDialogComponent;
 
@@ -14,6 +16,7 @@ export class ReplyComponent implements OnInit {
   constructor(private MdlSnackbarService: MdlSnackbarService, @Inject('user') private userService) { }
   _replys: Replies[] = [];
   replyId: string;
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   @Input()
   set replys(replys: Replies[]) {
     this._replys = [...replys];
@@ -23,7 +26,11 @@ export class ReplyComponent implements OnInit {
   }
   @Output() onReply = new EventEmitter<any>();
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
   }
 
   onReplyTriggered(id: string, author: any): void {
@@ -31,7 +38,7 @@ export class ReplyComponent implements OnInit {
       if (user === null) {
         this.MdlSnackbarService.showToast("您还没有登录，请先登录");
       }
-    }).filter(user => user !== null).subscribe((user) => {
+    }).filter(user => user !== null).takeUntil(this._takeUntil$).subscribe((user) => {
       this.replyId = id;
       this.reply = `@${author.loginname}`;
       this.replyDialog.show()

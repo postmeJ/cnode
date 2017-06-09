@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject, animate, transition, trigger, state, style } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject, animate, transition, trigger, state, style, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router"
 import { MdlLayoutTabPanelComponent } from "angular2-mdl"
 import { Message, AUTH_TOKEN_KEY } from "../domain/entities"
+import { Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-message',
@@ -23,7 +24,7 @@ import { Message, AUTH_TOKEN_KEY } from "../domain/entities"
     ])
   ]
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
   @ViewChildren(MdlLayoutTabPanelComponent) tabs: QueryList<MdlLayoutTabPanelComponent>
   loading: boolean = false;
   readMessages: Message[] = [];
@@ -34,6 +35,7 @@ export class MessageComponent implements OnInit {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
   }
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
 
   constructor( @Inject('message') private messageService, private router: Router) { }
 
@@ -57,7 +59,7 @@ export class MessageComponent implements OnInit {
     this.loading = true;
     this.readMessages = [];
 
-    this.messageService.getMessageByCondition(accesstoken, "has_read_messages").subscribe(res => {
+    this.messageService.getMessageByCondition(accesstoken, "has_read_messages").takeUntil(this._takeUntil$).subscribe(res => {
       this.readMessages = [...res]
       this.loading = false;
     });
@@ -66,7 +68,7 @@ export class MessageComponent implements OnInit {
     this.loading = true;
     this.unreadMessages = [];
 
-    this.messageService.getMessageByCondition(accesstoken, "hasnot_read_messages").subscribe(res => {
+    this.messageService.getMessageByCondition(accesstoken, "hasnot_read_messages").takeUntil(this._takeUntil$).subscribe(res => {
       this.unreadMessages = [...res]
       this.loading = false;
     });
@@ -80,14 +82,14 @@ export class MessageComponent implements OnInit {
     this.router.navigate([`/detail/${id}`])
   }
   makeMessage(msgId: string, topicId: string) {
-    this.messageService.makeOneMessage(this.authToken, msgId).subscribe(res => {
+    this.messageService.makeOneMessage(this.authToken, msgId).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.gotoDetail(topicId);
       }
     })
   }
   makeAll() {
-    this.messageService.makeAllMessage(this.authToken).subscribe(res => {
+    this.messageService.makeAllMessage(this.authToken).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.success) {
         this.getMessage(this.authToken);
       }
@@ -95,5 +97,9 @@ export class MessageComponent implements OnInit {
   }
   private tabChanged($event) {
     this.getMessage(this.authToken);
+  }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
   }
 }

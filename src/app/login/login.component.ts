@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject, transition, trigger, state, style, animate } from '@angular/core';
+import { Component, OnInit, Inject, transition, trigger, state, style, animate, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MdlSnackbarService } from "angular2-mdl"
 import { Auth, AUTH_TOKEN_KEY } from "../domain/entities"
+import { Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-login',
@@ -23,10 +24,11 @@ import { Auth, AUTH_TOKEN_KEY } from "../domain/entities"
     ])
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   accessToken: string;
   authToken: string = localStorage.getItem(AUTH_TOKEN_KEY);
   auth: Auth;
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   constructor( @Inject('auth') private service,
     private router: Router,
     private mdlSnackbarService: MdlSnackbarService,
@@ -39,13 +41,17 @@ export class LoginComponent implements OnInit {
     }
     this.userService.clearUserInfo();
   }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
+  }
   onSubmit(): void {
     if (!this.accessToken) {
       this.mdlSnackbarService.showToast("accessToken不能为空");
       return;
     }
 
-    this.service.loginWithCredentials(this.accessToken).subscribe(auth => {
+    this.service.loginWithCredentials(this.accessToken).takeUntil(this._takeUntil$).subscribe(auth => {
       this.auth = Object.assign({}, auth);
       if (!auth.hasError) {
         localStorage.setItem(AUTH_TOKEN_KEY, this.accessToken);

@@ -92,5 +92,6 @@ app-detail p {
     padding-bottom: 1rem;
 }
 .content {
-    overflow: hidden
+    overflow: hidden;
+    margin-top: 1px;
 }

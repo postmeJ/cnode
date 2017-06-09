@@ -1,6 +1,7 @@
-import { Component, OnInit, Inject, Input, trigger, state, transition, style, animate } from '@angular/core';
+import { Component, OnInit, Inject, Input, trigger, state, transition, style, animate, OnDestroy } from '@angular/core';
 import { MdlSnackbarService } from "angular2-mdl"
 import { UserDetails, Topics } from "../domain/entities"
+import { Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-user',
@@ -22,14 +23,16 @@ import { UserDetails, Topics } from "../domain/entities"
     ])
   ]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   userDetails: UserDetails;
   collectTopics: Topics[] = [];
   @Input() basis: boolean = true;
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   constructor( @Inject('profile') private service, private MdlSnackbarService: MdlSnackbarService) { }
 
   ngOnInit() {
     this.service.getUserDetail()
+      .takeUntil(this._takeUntil$)
       .subscribe(user => {
         this.userDetails = Object.assign({}, user.data);
         console.log(this.userDetails);
@@ -38,12 +41,16 @@ export class ProfileComponent implements OnInit {
         this.MdlSnackbarService.showToast("请求出错，请联系管理员")
       }
       );
-    this.service.getUserCollect().subscribe(topics => {
+    this.service.getUserCollect().takeUntil(this._takeUntil$).subscribe(topics => {
       this.collectTopics.push(...topics.data);
     },
       error => {
         this.MdlSnackbarService.showToast("请求出错，请联系管理员")
       }
     )
+  }
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
   }
 }

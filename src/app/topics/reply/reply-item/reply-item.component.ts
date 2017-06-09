@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, Input, Output, EventEmitter, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Replies, USER_INFO_KEY, User } from "../../../domain/entities"
 import { MdlSnackbarService } from "angular2-mdl"
+import { Subject } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-reply-item',
@@ -8,24 +9,28 @@ import { MdlSnackbarService } from "angular2-mdl"
   styleUrls: ['./reply-item.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ReplyItemComponent implements OnInit {
+export class ReplyItemComponent implements OnInit, OnDestroy {
   @Input() item: Replies;
   @Output() onReplyTriggered = new EventEmitter<string>();
   private user: User = JSON.parse(sessionStorage.getItem(USER_INFO_KEY));
-
+  private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   constructor( @Inject('reply') private replySevice, private MdlSnackbarService: MdlSnackbarService, @Inject('user') private userService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
-  onStar(reply_id: string) {
+  ngOnDestroy(): void {
+    this._takeUntil$.next(true);
+    this._takeUntil$.unsubscribe();
+  }
+  onStar(reply_id: string): void {
     this.userService.getUserInfo().do(user => {
       if (user === null) {
         this.MdlSnackbarService.showToast("您还没有登录，请先登录");
       }
     }).filter(user => user !== null).switchMap(() => {
       return this.replySevice.toStar(reply_id);
-    }).subscribe(res => {
+    }).takeUntil(this._takeUntil$).subscribe(res => {
       if (res.action === "up") {
         this.item.is_uped = true;
         this.item.ups = [...this.item.ups, this.user.id.toString()];
@@ -40,7 +45,7 @@ export class ReplyItemComponent implements OnInit {
       }
       )
   }
-  onReply(reply_id: string) {
+  onReply(reply_id: string): void {
     this.onReplyTriggered.emit(reply_id);
   }
 }
