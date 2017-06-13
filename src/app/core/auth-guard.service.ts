@@ -6,12 +6,13 @@ import {
   CanActivateChild,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
+  CanDeactivate,
   Route
 } from '@angular/router';
-import { AUTH_TOKEN_KEY, REDIRECT_URL, USER_INFO_KEY } from "../domain/entities"
+import { AUTH_TOKEN_KEY, REDIRECT_URL, USER_INFO_KEY, CanComponentDeactivate } from '../domain/entities';
 
 @Injectable()
-export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild {
+export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild, CanDeactivate<CanComponentDeactivate> {
   private _authToken: string;
 
   set authToken(authToken) {
@@ -49,5 +50,8 @@ export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild 
   }
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.canActivate(route, state);
+  }
+  canDeactivate(component: CanComponentDeactivate) {
+    return component.canDeactivate ? component.canDeactivate() : true;
   }
 }

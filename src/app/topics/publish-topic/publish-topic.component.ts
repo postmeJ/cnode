@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, transition, trigger, animate, state, style } from '@angular/core';
-import { MdlSnackbarService } from "angular2-mdl"
-import { AUTH_TOKEN_KEY } from "../../domain/entities"
+import { Component, OnInit, Inject, transition, trigger, animate, state, style, ElementRef, ViewChild } from '@angular/core';
+import { MdlSnackbarService, MdlDialogService } from "angular2-mdl";
+import { AUTH_TOKEN_KEY, CanComponentDeactivate } from "../../domain/entities";
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,12 +23,13 @@ import { Router } from '@angular/router';
     ])
   ]
 })
-export class PublishTopicComponent implements OnInit {
+export class PublishTopicComponent implements OnInit, CanComponentDeactivate {
   topicTypes: [any] = [
     { name: "分享", value: "share" },
     { name: "问答", value: "ask" },
     { name: "招聘", value: "job" }
   ];
+  @ViewChild('publishForm') form: ElementRef;
   private _authToken: string;
   get authToken(): string {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
@@ -38,7 +39,10 @@ export class PublishTopicComponent implements OnInit {
   topicType: any;
   content: string = "";
   title: string = "";
-  constructor(private MdlSnackbarService: MdlSnackbarService, @Inject('topics') private topicService, private router:Router) { }
+  constructor(private MdlSnackbarService: MdlSnackbarService, 
+    @Inject('topics') private topicService, 
+    private router:Router,
+    private dialogService: MdlDialogService) { }
 
   ngOnInit() {
   }
@@ -64,6 +68,14 @@ export class PublishTopicComponent implements OnInit {
         this.MdlSnackbarService.showToast("发表成功");
         this.router.navigate(['/topics']);
       }
-    })
+    });
+  }
+  canDeactivate(){
+    // CanDeactivate Bug when multi click back button of browser with "return false" of canDeactivate
+    // 待解决bug
+    if (this.form.nativeElement.classList.contains('ng-dirty')){
+      return confirm("您的帖子尚未发布，确认离开此页面?");
+    }
+    return true;
   }
 }

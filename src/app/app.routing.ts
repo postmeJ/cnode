@@ -13,6 +13,18 @@ const routes: Routes = [
         path: 'topics',
         redirectTo: 'topics' ,
         canLoad: [AuthGuardService]
+    },
+    {
+        path: 'login',
+        loadChildren: './login/login.module#LoginModule'
+    },
+    {
+        path: 'message',
+        loadChildren: './message/message.module#MessageModule'
+    },
+    {
+        path: 'profile',
+        loadChildren: './profile/profile.module#ProfileModule'
     }
 ];
 

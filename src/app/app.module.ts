@@ -10,7 +10,7 @@ import { ProfileModule } from "./profile/profile.module"
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
-import { MessageModule } from './message/message.mudule';
+import { MessageModule } from './message/message.module';
 
 @NgModule({
   declarations: [

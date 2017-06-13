@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
-import { MessageService } from "./message.service"
+import { MessageService } from './message.service';
 
 @NgModule({
     imports: [
@@ -13,7 +13,7 @@ import { MessageService } from "./message.service"
         { provide: 'user', useClass: UserService },
         { provide: 'auth', useClass: AuthService },
         { provide: 'message', useClass: MessageService },
-        AuthGuardService
+        AuthGuardService,
     ]
 })
 export class CoreModule {
