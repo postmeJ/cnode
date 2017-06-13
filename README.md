@@ -6,7 +6,7 @@ A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technol
 
 ## Preview
 
-https://riyueweiyi.github.io/cnode-pro
+https://riyueweiyi.github.io/cnode
 
 ## What's included
 
