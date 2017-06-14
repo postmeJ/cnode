@@ -9,10 +9,12 @@ const routes: Routes = [
     {
         path: 'topics',
         component: TopicsComponent,
-    },
-    {
-        path: 'detail/:id',
-        component: DetailComponent,
+        children: [
+            {
+                path: 'detail/:id',
+                component: DetailComponent,
+            }
+        ]
     },
     {
         path: 'publish',

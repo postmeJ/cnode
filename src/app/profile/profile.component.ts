@@ -26,16 +26,18 @@ import { Subject } from 'rxjs/Rx'
 export class ProfileComponent implements OnInit, OnDestroy {
   userDetails: UserDetails;
   collectTopics: Topics[] = [];
+  loading: boolean = false;
   @Input() basis: boolean = true;
   private _takeUntil$: Subject<boolean> = new Subject<boolean>();
   constructor( @Inject('profile') private service, private MdlSnackbarService: MdlSnackbarService) { }
 
   ngOnInit() {
+    this.loading = true;
     this.service.getUserDetail()
       .takeUntil(this._takeUntil$)
       .subscribe(user => {
+        this.loading = false;
         this.userDetails = Object.assign({}, user.data);
-        console.log(this.userDetails);
       },
       error => {
         this.MdlSnackbarService.showToast("请求出错，请联系管理员")

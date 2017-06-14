@@ -58,7 +58,7 @@
             <mdl-list-item *ngFor="let replies of userDetails.recent_replies">
               <mdl-list-item-primary-content>
                 <mdl-list-item-text-body>
-                  <a  [routerLink]="['/detail/' + replies.id]">
+                  <a [routerLink]="['/detail/' + replies.id]">
                     <img preview="3rem" class="author-avatar" [src]="replies.author.avatar_url" alt=""> 
                     {{replies.title}}
                   </a>
@@ -71,6 +71,11 @@
           <p class="empty">暂无话题</p>
         </ng-container>
       </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="loading">
+    <div class="loading">
+      <mdl-spinner [active]="true"></mdl-spinner>
     </div>
   </ng-container>
 </div>

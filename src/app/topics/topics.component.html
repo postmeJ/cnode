@@ -1,4 +1,4 @@
-<div class="demo-container">
+<div [hidden]="!isListPage">
   <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="standard" (mdl-layout-tab-active-changed)="tabChanged($event)">
     <mdl-layout-header mdl-shadow="2">
       <mdl-layout-header-row>
@@ -79,3 +79,5 @@
     </mdl-layout-content>
   </mdl-layout>
 </div>
+<router-outlet>
+</router-outlet>
