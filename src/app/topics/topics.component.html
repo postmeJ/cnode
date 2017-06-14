@@ -12,7 +12,7 @@
     </mdl-layout-header>
     <mdl-layout-drawer>
       <mdl-layout-title>
-        <div *ngIf="userDetail">
+        <ng-container *ngIf="userDetail">
           <div class="user-card">
             <div class="user-avatar">
               <img [src]="userDetail.avatar_url" preview="7rem"  alt="">
@@ -21,8 +21,8 @@
             <div class="user-score">积分：{{userDetail.score}}</div>
             <div class="create-time">注册于：{{userDetail.create_at | fromNow}}</div>
           </div>
-        </div>
-        <div *ngIf="!userDetail">
+        </ng-container>
+        <ng-container *ngIf="!userDetail">
           <div>
             <div class="no-login">
               <a [routerLink]="['/login']">
@@ -31,13 +31,15 @@
               <p>点击头像登陆</p>
             </div>
           </div>
-        </div>
+        </ng-container>
       </mdl-layout-title>
-      <nav *ngIf="userDetail" class="mdl-navigation">
-        <a class="mdl-navigation__link" [routerLink]="['/profile']">个人中心</a>
-        <a class="mdl-navigation__link" [routerLink]="['/message']">我的消息</a>
-        <a class="mdl-navigation__link" [routerLink]="['/login']">退出登录</a>
-      </nav>
+      <ng-container *ngIf="userDetail">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" [routerLink]="['/profile']">个人中心</a>
+          <a class="mdl-navigation__link" [routerLink]="['/message']">我的消息</a>
+          <a class="mdl-navigation__link" [routerLink]="['/login']">退出登录</a>
+        </nav>
+      </ng-container>
 
     </mdl-layout-drawer>
     <mdl-layout-content>
@@ -69,9 +71,11 @@
       <a [routerLink]="['/publish']" mdl-button class="create-topic" mdl-button-type="fab" mdl-colored="accent" mdl-ripple>
         <mdl-icon>add</mdl-icon>
       </a>
-      <div *ngIf="loading" class="loading">
-        <mdl-spinner [active]="true"></mdl-spinner>
-      </div>
+      <ng-container *ngIf="loading">
+        <div class="loading">
+          <mdl-spinner [active]="true"></mdl-spinner>
+        </div>
+      </ng-container>
     </mdl-layout-content>
   </mdl-layout>
 </div>
