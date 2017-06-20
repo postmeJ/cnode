@@ -8,17 +8,26 @@ import { PublishTopicComponent } from './publish-topic/publish-topic.component';
 const routes: Routes = [
     {
         path: 'topics',
-        component: TopicsComponent
+        component: TopicsComponent, 
+        data: {
+            title: '主题列表'
+        }
     },
     {
         path: 'detail/:id',
         component: DetailComponent,
+        data: {
+            title: '主题详情'
+        }
     },
     {
         path: 'publish',
         component: PublishTopicComponent,
         canActivate: [AuthGuardService],
         canDeactivate: [AuthGuardService],
+        data: {
+            title: '发布主题'
+        }
     }
 ]
 

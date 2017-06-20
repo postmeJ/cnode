@@ -7,7 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    data: {
+      title: '个人中心'
+    }
   }
 ];
 

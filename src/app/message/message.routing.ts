@@ -7,7 +7,10 @@ const routes: Routes = [
     {
         path: '',
         component: MessageComponent,
-        canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService],
+        data: {
+            title: '消息中心'
+        }
     }
 ]
 
