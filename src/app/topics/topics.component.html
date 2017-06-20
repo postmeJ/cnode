@@ -1,12 +1,12 @@
-<div [hidden]="!isListPage">
-  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed mdl-layout-mode="standard" (mdl-layout-tab-active-changed)="tabChanged($event)">
+<div>
+  <mdl-layout mdl-layout-fixed-header [mdl-layout-tab-active-index]="tabActiveIndex" mdl-layout-header-seamed mdl-layout-mode="standard" (mdl-layout-tab-active-changed)="tabChanged($event)">
     <mdl-layout-header mdl-shadow="2">
       <mdl-layout-header-row>
         <mdl-layout-title>Cnode 社区</mdl-layout-title>
         <mdl-layout-spacer></mdl-layout-spacer>
         <!-- Navigation. We hide it in small screens. -->
         <a mdl-button="" mdl-button-type="icon" [routerLink]="['/message']" ng-reflect-mdl-button-type="icon" class="mdl-button mdl-button--icon">
-         <mdl-icon class="material-icons" [mdl-badge]="msgCount" mdl-badge-overlap>message</mdl-icon>
+          <mdl-icon class="material-icons" [mdl-badge]="msgCount" mdl-badge-overlap>message</mdl-icon>
         </a>
       </mdl-layout-header-row>
     </mdl-layout-header>
@@ -15,7 +15,7 @@
         <ng-container *ngIf="userDetail">
           <div class="user-card">
             <div class="user-avatar">
-              <img [src]="userDetail.avatar_url" preview="7rem"  alt="">
+              <img [src]="userDetail.avatar_url" preview="7rem" alt="">
             </div>
             <div class="login-name">{{userDetail.loginname}}</div>
             <div class="user-score">积分：{{userDetail.score}}</div>
@@ -43,31 +43,11 @@
 
     </mdl-layout-drawer>
     <mdl-layout-content>
-      <mdl-layout-tab-panel mdl-layout-tab-panel-title="全部">
-        <div>
-          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
-        </div>
-      </mdl-layout-tab-panel>
-      <mdl-layout-tab-panel mdl-layout-tab-panel-title="精华">
-        <div>
-          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
-        </div>
-      </mdl-layout-tab-panel>
-      <mdl-layout-tab-panel mdl-layout-tab-panel-title="分享">
-        <div>
-          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
-        </div>
-      </mdl-layout-tab-panel>
-      <mdl-layout-tab-panel mdl-layout-tab-panel-title="问答">
-        <div>
-          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
-        </div>
-      </mdl-layout-tab-panel>
-      <mdl-layout-tab-panel mdl-layout-tab-panel-title="招聘">
-        <div>
-          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)"></app-topic>
-        </div>
-      </mdl-layout-tab-panel>
+      <ng-container *ngFor="let title of titles">
+        <mdl-layout-tab-panel [mdl-layout-tab-panel-title]="title">
+          <app-topic *ngFor="let item of list" [topic]="item" (onClick)="gotoDetail($event, item.id)" #topic></app-topic>
+        </mdl-layout-tab-panel>
+      </ng-container>
       <a [routerLink]="['/publish']" mdl-button class="create-topic" mdl-button-type="fab" mdl-colored="accent" mdl-ripple>
         <mdl-icon>add</mdl-icon>
       </a>

@@ -90,10 +90,17 @@ export class Message {
     }
 }
 
+export class BrowseInfo {
+    scrollTop: number;
+    tabIndex: number;
+    page: number;
+}
+
 export const BASE_API_URL = 'https://cnodejs.org/api/v1';
 export const USER_INFO_KEY = 'USER_INFO_KEY';
 export const AUTH_TOKEN_KEY = 'AUTH_TOKEN_KEY';
 export const REDIRECT_URL = 'REDIRECT_URL';
+export const BROWSEINFO_KEY = 'BROWSEINFO_KEY';
 export interface CanComponentDeactivate {
   canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }

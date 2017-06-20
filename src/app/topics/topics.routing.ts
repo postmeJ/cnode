@@ -8,13 +8,11 @@ import { PublishTopicComponent } from './publish-topic/publish-topic.component';
 const routes: Routes = [
     {
         path: 'topics',
-        component: TopicsComponent,
-        children: [
-            {
-                path: 'detail/:id',
-                component: DetailComponent,
-            }
-        ]
+        component: TopicsComponent
+    },
+    {
+        path: 'detail/:id',
+        component: DetailComponent,
     },
     {
         path: 'publish',
