@@ -2,3 +2,10 @@
     padding-left: .5rem;
     text-align: center
 }
+
+.error {
+    color: #e22
+}
+.m-t-20 {
+    margin-top: 20px;
+}

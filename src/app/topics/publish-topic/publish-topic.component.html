@@ -1,14 +1,28 @@
 <app-header title="发布帖子">
 </app-header>
 <div class="publish-topic-container" [@animated]>
-  <form (ngSubmit)="onSubmit()" #publishForm>
-    <app-select [list]="topicTypes" placeholder="请选择主题" (onSelect)="getSelectValue($event)"></app-select>
-    <mdl-textfield type="text" label="标题..." name="title" floating-label [(ngModel)]="title" #titleRef="ngModel">
+  <form (ngSubmit)="onSubmit(form)" novalidate [formGroup]="form">
+    <mdl-select formControlName="type" placeholder="选择发布主题...">
+      <mdl-option *ngFor="let topic of topicTypes" [value]="topic.value">{{topic.name}}</mdl-option>
+    </mdl-select>
+    <div class="error" *ngIf="form.get('type').invalid && 
+          form.get('type').touched">
+      请选择您发布的主题类型...
+    </div>
+    <mdl-textfield type="text" label="请输入标题，不少于10个字..." floating-label formControlName="title">
     </mdl-textfield>
-    <mdl-textfield type="text" label="内容..." name="content" floating-label [(ngModel)]="content" #contentRef="ngModel">
+    <div class="error" *ngIf="form.get('title').invalid && 
+          form.get('title').touched">
+      请输入标题，不少于10个字...
+    </div>
+    <mdl-textfield type="text" label="请输入主题内容..." rows="3" maxrows="3" floating-label formControlName="content">
     </mdl-textfield>
-    <div>
-      <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+     <div class="error" *ngIf="form.get('content').invalid && 
+          form.get('content').touched">
+      请输入主题内容...
+    </div>
+    <div class="m-t-20">
+      <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit" [disabled]="!form.valid">
         发布主题
       </button>
     </div>

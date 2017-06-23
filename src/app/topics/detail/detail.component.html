@@ -32,7 +32,7 @@
       <app-reply [replys]="detail.replies" (onReply)="submitReply($event)"></app-reply>
     </div>
     <form (ngSubmit)="onSubmit()" class="reply-form">
-      <mdl-textfield type="text" label="回复..." name="content" floating-label [(ngModel)]="content" #accessTokenRef="ngModel">
+      <mdl-textfield type="text" label="回复..." rows="2" maxrows="2" name="content" floating-label [(ngModel)]="content" #accessTokenRef="ngModel">
       </mdl-textfield>
       <div>
         <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">

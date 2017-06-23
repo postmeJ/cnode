@@ -3,6 +3,7 @@ import { MdlSnackbarService, MdlDialogService } from 'angular2-mdl';
 import { AUTH_TOKEN_KEY, CanComponentDeactivate } from '../../domain/entities';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
+import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-publish-topic',
@@ -30,7 +31,7 @@ export class PublishTopicComponent implements OnInit, CanComponentDeactivate, On
     { name: '问答', value: 'ask' },
     { name: '招聘', value: 'job' }
   ];
-  @ViewChild('publishForm') form: ElementRef;
+  form: FormGroup;
   private destory$: Subject<boolean> = new Subject<boolean>();
   private _authToken: string;
   get authToken(): string {
@@ -38,48 +39,53 @@ export class PublishTopicComponent implements OnInit, CanComponentDeactivate, On
     return this._authToken;
   }
 
-  topicType: any;
-  content: string = '';
-  title: string = '';
   constructor(private MdlSnackbarService: MdlSnackbarService,
     @Inject('topics') private topicService,
     private router: Router,
-    private dialogService: MdlDialogService) { }
+    private dialogService: MdlDialogService,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.createForm();
   }
   ngOnDestroy() {
     this.destory$.next(true);
     this.destory$.unsubscribe();
   }
-  getSelectValue($event) {
-    this.topicType = $event;
+  createForm(): void {
+    this.form = this.fb.group({
+      title: ['', Validators.required],
+      content: ['', Validators.required],
+      type: ['', Validators.required]
+    });
   }
-  onSubmit() {
-    if (this.topicType == null) {
-      this.MdlSnackbarService.showToast('请选择主题');
-      return;
-    }
 
-    if (this.title.length < 10) {
-      this.MdlSnackbarService.showToast('标题字数十个字以上');
-      return;
-    }
-    if (this.content.length == 0) {
-      this.MdlSnackbarService.showToast('请输入内容');
-      return;
-    }
-    this.topicService.publishTopic(this.authToken, this.title, this.topicType.value, this.content).takeUntil(this.destory$).subscribe(res => {
+  onSubmit({ value, valid }) {
+    this.topicService.publishTopic(this.authToken, value.title, value.type, value.content).takeUntil(this.destory$).subscribe(res => {
       if (res.success) {
         this.MdlSnackbarService.showToast('发表成功');
         this.router.navigate(['/topics']);
       }
+    }, ({ _body }) => {
+      const error = JSON.parse(_body);
+
+      if (!error.success) {
+        this.MdlSnackbarService.showToast(`${error.error_msg}`);
+      }
     });
   }
-  canDeactivate() {
-    // CanDeactivate Bug when multi click back button of browser with 'return false' of canDeactivate
-    // 待解决bug
-    if (this.form.nativeElement.classList.contains('ng-dirty')) {
+  // 判断表单中是否存在有效值
+  private hasDefenses(form: FormGroup): boolean {
+    for (let c in form.controls) {
+      if (form.controls[c].value.toString().trim().length > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  canDeactivate(): boolean {
+    // 待解决bug CanDeactivate Bug when multi click back button of browser with 'return false' of canDeactivate
+    if (this.hasDefenses(this.form)) {
       return confirm('您的帖子尚未发布，确认离开此页面?');
     }
     return true;

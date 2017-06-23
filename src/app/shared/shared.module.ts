@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdlModule } from 'angular2-mdl';
 import { HeaderComponent } from "./components/header/header.component"
 import { FromNowPipe } from "./pice/from-now.pipe";
-import { SelectComponent } from './components/select/select.component';
 import { PreviewDirective } from './directives/preview.directive';
+import { MdlSelectModule } from '@angular-mdl/select';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    MdlModule
+    MdlModule,
+    ReactiveFormsModule,
+    MdlSelectModule
   ],
   exports: [
     CommonModule,
@@ -18,9 +21,10 @@ import { PreviewDirective } from './directives/preview.directive';
     MdlModule,
     HeaderComponent,
     FromNowPipe,
-    SelectComponent,
-    PreviewDirective
+    ReactiveFormsModule,
+    PreviewDirective,
+    MdlSelectModule
   ],
-  declarations: [HeaderComponent, FromNowPipe, SelectComponent, PreviewDirective],
+  declarations: [HeaderComponent, FromNowPipe, PreviewDirective],
 })
 export class SharedModule { }

@@ -40,7 +40,7 @@ export class ReplyComponent implements OnInit, OnDestroy {
       }
     }).filter(user => user !== null).takeUntil(this._takeUntil$).subscribe((user) => {
       this.replyId = id;
-      this.reply = `@${author.loginname}`;
+      this.reply = `@${author.loginname} `;
       this.replyDialog.show()
     })
   }
