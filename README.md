@@ -1,16 +1,54 @@
-# Cnode
+# Cnode介绍
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.2.
+项目使用Angular2开发的一个WebApp版的Cnode客户端
 
-A cnode community developed using the `Angular2` + `TypeScript` + `Rxjs` technology
+主要运用技术栈: [Angular2](https://angular.io/)  [TypeScript](http://www.typescriptlang.org/)  [Rxjs](http://reactivex.io/) 
 
-## Preview
+UI库: [Angular mdl](https://github.com/mseemann/angular2-mdl)
 
-https://riyueweiyi.github.io/cnode
+工具: [Angular CLI](https://github.com/angular/angular-cli)
 
-## What's included
+## 预览地址
 
-Within the project you'll find the following directories and files, You'll see something like this:
+[Cnode](https://riyueweiyi.github.io/cnode)
+
+## 环境配置
+
+``` bash
+# 安装依赖
+npm install
+
+因为angular mdl的版本问题，初次运行需要将node_modules/@angular-mdl/popover/popover.scss和node_modules/@angular-mdl/select/select.scss中的@import "../../../node_modules/@angular-mdl/core/scss/variables" 修改为 @import "../../../node_modules/angular2-mdl/scss/mdl/_variables" 方能正确运行
+
+# 运行开发环境
+ng serve
+
+打开 http://localhost:4200/ 将看见项目的运行效果
+
+# 生产环境
+ng build --prod
+
+构建好的文件将被保存在dist/目录下
+```
+
+## 涉及的技术点
+
+* 自定义首屏加载动画
+* 页面跳转动态设置页面标题
+* 详情页回退到列表记录用户浏览位置并更新局部视图（利用本地存储记录用户浏览信息，后退回来后请求所有数据，在数据量多的情况性能不容乐观）
+* 路由懒加载
+* `canActivate` `canDeactivate`设置路由守卫
+* 响应式表单
+* 自定义 `pipe`
+* 自定义指令
+
+## angular cli指南
+
+运行 `ng generate component component-name` 创建一个组件. 你也可以运行 `ng generate directive/pipe/service/class/module` 创建 `指令/管道/服务/类/模块`.
+
+更多的使用指南运行 `ng help` 查看或者查看 [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## 目录结构
 
 ```
 
@@ -149,27 +187,15 @@ Within the project you'll find the following directories and files, You'll see s
 
 ```
 
-## Development server
+##最后
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+感谢 [cnode](https://cnodejs.org/) 提供的api
 
-## Code scaffolding
+感谢 [Michael Seemann](https://github.com/mseemann/angular2-mdl) 开发的UI库
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+界面参考 [lumia2046](https://github.com/lumia2046/cnode) 万分感谢
 
-## Build
+项目目前还在优化重构中，如果有什么更好的意见或建议欢迎大家和我联系
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* 邮件(798057081@qq.com)
+* QQ: 798057081
