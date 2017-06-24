@@ -12,6 +12,10 @@ UI库: [Angular mdl](https://github.com/mseemann/angular2-mdl)
 
 [Cnode](https://riyueweiyi.github.io/cnode)
 
+或扫描以下二维码
+
+![cnode](qrcode.png)
+
 ## 环境配置
 
 ``` bash
@@ -187,7 +191,7 @@ ng build --prod
 
 ```
 
-##最后
+## 最后
 
 感谢 [cnode](https://cnodejs.org/) 提供的api
 
