@@ -2,10 +2,11 @@ import {
   Component, OnInit, Inject, ViewChildren,
   QueryList, AfterViewInit, ViewChild, OnDestroy, ElementRef
 } from '@angular/core';
-import { UserDetails, Topic, AUTH_TOKEN_KEY, BrowseInfo, BROWSEINFO_KEY } from '../domain/entities'
-import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent, MdlSnackbarService } from 'angular2-mdl'
-import { Router } from '@angular/router'
-import { Observable, Subject, BehaviorSubject } from 'rxjs/Rx'
+import { UserDetails, Topic, AUTH_TOKEN_KEY, BrowseInfo, BROWSEINFO_KEY } from '../domain/entities';
+import { MdlLayoutTabPanelComponent, MdlLayoutContentComponent, MdlSnackbarService } from 'angular2-mdl';
+import { Router } from '@angular/router';
+import { Observable, Subject, BehaviorSubject } from 'rxjs/Rx';
+import { AuthGuardService } from '../core/auth-guard.service';
 
 @Component({
   selector: 'app-topics',
@@ -34,12 +35,8 @@ export class TopicsComponent implements OnInit, OnDestroy {
   private limit: number = 10;
   private loading: boolean = false;
   private msgCount: number = 0;
-  private _authToken: string;
+  private authToken: string;
   private _takeUntil$: Subject<boolean> = new Subject<boolean>();
-  get authToken(): string {
-    this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
-    return this._authToken;
-  }
 
   @ViewChildren(MdlLayoutTabPanelComponent) tabs: QueryList<MdlLayoutTabPanelComponent>
   @ViewChildren('topic') topicDom: QueryList<ElementRef>
@@ -49,18 +46,20 @@ export class TopicsComponent implements OnInit, OnDestroy {
     @Inject('topics') private topicsService,
     @Inject('message') private messageService,
     private router: Router,
-    private MdlSnackbarService: MdlSnackbarService) {
-    if (this.browser === null) {
-      this.tabActiveIndex = 0;
-      this.scrollTop = 0;
-      return;
+    private MdlSnackbarService: MdlSnackbarService,
+    private authGuard: AuthGuardService) {
+      this.authToken = this.authGuard.getAuthToken();
+      if (this.browser === null) {
+        this.tabActiveIndex = 0;
+        this.scrollTop = 0;
+        return;
+      }
+      // 设置用户浏览记录
+      const { tabIndex, scrollTop, page } = this.browser;
+      this.tabActiveIndex = tabIndex;
+      this.scrollTop = scrollTop;
+      this.pageIndex = page;
     }
-    // 设置用户浏览记录
-    const { tabIndex, scrollTop, page } = this.browser;
-    this.tabActiveIndex = tabIndex;
-    this.scrollTop = scrollTop;
-    this.pageIndex = page;
-  }
 
   ngOnInit() {
     this.getUserDetail();

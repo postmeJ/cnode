@@ -1,6 +1,6 @@
 <div>
   <app-header title="登录" [back]="false"></app-header>
-  <form (ngSubmit)="onSubmit()" [@animated]>
+  <form (ngSubmit)="onSubmit()" [@slideDown]>
     <mdl-textfield type="text" label="accessToken..." name="accessToken" floating-label [(ngModel)]="accessToken" #accessTokenRef="ngModel">
     </mdl-textfield>
     <div>

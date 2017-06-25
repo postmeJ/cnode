@@ -1,6 +1,6 @@
 <app-header title="发布帖子">
 </app-header>
-<div class="publish-topic-container" [@animated]>
+<div class="publish-topic-container" [@slideUp]>
   <form (ngSubmit)="onSubmit(form)" novalidate [formGroup]="form">
     <mdl-select formControlName="type" placeholder="选择发布主题...">
       <mdl-option *ngFor="let topic of topicTypes" [value]="topic.value">{{topic.name}}</mdl-option>

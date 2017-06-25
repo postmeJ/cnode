@@ -1,28 +1,18 @@
-import { Component, OnInit, Inject, transition, trigger, animate, state, style, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { MdlSnackbarService, MdlDialogService } from 'angular2-mdl';
 import { AUTH_TOKEN_KEY, CanComponentDeactivate } from '../../domain/entities';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
+import { AuthGuardService } from '../../core/auth-guard.service';
+import { slideUp } from '../../domain/animate';
 
 @Component({
   selector: 'app-publish-topic',
   templateUrl: './publish-topic.component.html',
   styleUrls: ['./publish-topic.component.css'],
   animations: [
-    trigger('animated', [
-      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
-      transition('void => *', [
-        style({ transform: 'translateY(50px)', opacity: 0 }),
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
-      ]),
-      transition('* => void', [
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
-          transform: 'translateY(-50px)',
-          opacity: 0
-        }))
-      ])
-    ])
+    slideUp
   ]
 })
 export class PublishTopicComponent implements OnInit, CanComponentDeactivate, OnDestroy {
@@ -33,17 +23,16 @@ export class PublishTopicComponent implements OnInit, CanComponentDeactivate, On
   ];
   form: FormGroup;
   private destory$: Subject<boolean> = new Subject<boolean>();
-  private _authToken: string;
-  get authToken(): string {
-    this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
-    return this._authToken;
-  }
+  private authToken: string;
 
   constructor(private MdlSnackbarService: MdlSnackbarService,
     @Inject('topics') private topicService,
     private router: Router,
     private dialogService: MdlDialogService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private authGuard: AuthGuardService) {
+    this.authToken = this.authGuard.getAuthToken();
+  }
 
   ngOnInit() {
     this.createForm();

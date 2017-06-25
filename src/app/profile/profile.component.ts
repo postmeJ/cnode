@@ -1,26 +1,15 @@
-import { Component, OnInit, Inject, Input, trigger, state, transition, style, animate, OnDestroy } from '@angular/core';
-import { MdlSnackbarService } from "angular2-mdl"
-import { UserDetails, Topics } from "../domain/entities"
-import { Subject } from 'rxjs/Rx'
+import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
+import { MdlSnackbarService } from 'angular2-mdl';
+import { UserDetails, Topics } from '../domain/entities';
+import { Subject } from 'rxjs/Rx';
+import { slideUp } from '../domain/animate';
 
 @Component({
   selector: 'app-user',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
   animations: [
-    trigger('animated', [
-      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
-      transition('void => *', [
-        style({ transform: 'translateY(50px)', opacity: 0 }),
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
-      ]),
-      transition('* => void', [
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
-          transform: 'translateY(-50px)',
-          opacity: 0
-        }))
-      ])
-    ])
+    slideUp
   ]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
@@ -40,14 +29,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userDetails = Object.assign({}, user.data);
       },
       error => {
-        this.MdlSnackbarService.showToast("请求出错，请联系管理员")
+        this.MdlSnackbarService.showToast('请求出错，请联系管理员');
       }
       );
     this.service.getUserCollect().takeUntil(this._takeUntil$).subscribe(topics => {
       this.collectTopics.push(...topics.data);
     },
       error => {
-        this.MdlSnackbarService.showToast("请求出错，请联系管理员")
+        this.MdlSnackbarService.showToast('请求出错，请联系管理员');
       }
     )
   }

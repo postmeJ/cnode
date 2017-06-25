@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { Replies, USER_INFO_KEY, User } from "../../../domain/entities"
-import { MdlSnackbarService } from "angular2-mdl"
-import { Subject } from 'rxjs/Rx'
+import { Replies, USER_INFO_KEY, User } from '../../../domain/entities';
+import { MdlSnackbarService } from 'angular2-mdl';
+import { Subject } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-reply-item',
@@ -26,22 +26,22 @@ export class ReplyItemComponent implements OnInit, OnDestroy {
   onStar(reply_id: string): void {
     this.userService.getUserInfo().do(user => {
       if (user === null) {
-        this.MdlSnackbarService.showToast("您还没有登录，请先登录");
+        this.MdlSnackbarService.showToast('您还没有登录，请先登录');
       }
     }).filter(user => user !== null).switchMap(() => {
       return this.replySevice.toStar(reply_id);
     }).takeUntil(this._takeUntil$).subscribe(res => {
-      if (res.action === "up") {
+      if (res.action === 'up') {
         this.item.is_uped = true;
         this.item.ups = [...this.item.ups, this.user.id.toString()];
-      } else if (res.action === "down") {
+      } else if (res.action === 'down') {
         this.item.is_uped = false;
         this.item.ups = this.item.ups.filter(id => id !== this.user.id);
       }
     },
       ({ _body }) => {
         let error = JSON.parse(_body);
-        this.MdlSnackbarService.showToast(error.error_msg)
+        this.MdlSnackbarService.showToast(error.error_msg);
       }
       )
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { Message } from "../../domain/entities"
+import { Message } from '../../domain/entities';
 @Component({
   selector: 'app-msg-item',
   templateUrl: './msg-item.component.html',

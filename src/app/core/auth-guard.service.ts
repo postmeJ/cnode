@@ -15,13 +15,21 @@ import { AUTH_TOKEN_KEY, REDIRECT_URL, USER_INFO_KEY, CanComponentDeactivate } f
 export class AuthGuardService implements CanActivate, CanLoad, CanActivateChild, CanDeactivate<CanComponentDeactivate> {
   private _authToken: string;
 
-  set authToken(authToken) {
+  set authToken(authToken: string) {
     localStorage.setItem(AUTH_TOKEN_KEY, authToken);
     this._authToken = authToken;
   }
   get authToken(): string {
     this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
     return this._authToken;
+  }
+
+  public getAuthToken(): string {
+    return this.authToken;
+  }
+  
+  public setAuthToken(authToken: string): void {
+    this.authToken = authToken;
   }
 
   private _userInfo: any;

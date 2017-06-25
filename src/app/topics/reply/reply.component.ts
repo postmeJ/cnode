@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, Inject, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Replies } from "../../domain/entities"
-import { MdlTextFieldComponent, MdlDialogReference, MdlSnackbarService, MdlDialogComponent } from "angular2-mdl"
-import { Subject } from 'rxjs/Rx'
+import { Replies } from '../../domain/entities'
+import { MdlTextFieldComponent, MdlDialogReference, MdlSnackbarService, MdlDialogComponent } from 'angular2-mdl'
+import { Subject } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-reply',
@@ -36,17 +36,17 @@ export class ReplyComponent implements OnInit, OnDestroy {
   onReplyTriggered(id: string, author: any): void {
     this.userService.getUserInfo().do(user => {
       if (user === null) {
-        this.MdlSnackbarService.showToast("您还没有登录，请先登录");
+        this.MdlSnackbarService.showToast('您还没有登录，请先登录');
       }
     }).filter(user => user !== null).takeUntil(this._takeUntil$).subscribe((user) => {
       this.replyId = id;
       this.reply = `@${author.loginname} `;
-      this.replyDialog.show()
+      this.replyDialog.show();
     })
   }
   submitReply(): void {
     if (!this.reply) {
-      this.MdlSnackbarService.showToast("评论不能为空");
+      this.MdlSnackbarService.showToast('评论不能为空');
       return;
     }
     this.onReply.emit({
@@ -54,7 +54,7 @@ export class ReplyComponent implements OnInit, OnDestroy {
       replyId: this.replyId
     });
     this.replyDialog.close();
-    this.reply = "";
+    this.reply = '';
   }
   public onDialogShow(dialogRef: MdlDialogReference): void {
     this.tfName.setFocus();

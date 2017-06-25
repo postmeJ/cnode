@@ -1,27 +1,17 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject, animate, transition, trigger, state, style, OnDestroy } from '@angular/core';
-import { Router } from "@angular/router"
-import { MdlLayoutTabPanelComponent } from "angular2-mdl"
-import { Message, AUTH_TOKEN_KEY } from "../domain/entities"
-import { Subject } from 'rxjs/Rx'
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Inject, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdlLayoutTabPanelComponent } from 'angular2-mdl';
+import { Message, AUTH_TOKEN_KEY } from '../domain/entities';
+import { Subject } from 'rxjs/Rx';
+import { AuthGuardService } from '../core/auth-guard.service';
+import { slideDown } from '../domain/animate'
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css'],
   animations: [
-    trigger('animated', [
-      state('*', style({ transform: 'translateY(0)', opacity: 1 })),
-      transition('void => *', [
-        style({ transform: 'translateY(-50px)', opacity: 0 }),
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)')
-      ]),
-      transition('* => void', [
-        animate('0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)', style({
-          transform: 'translateY(50px)',
-          opacity: 0
-        }))
-      ])
-    ])
+    slideDown
   ]
 })
 export class MessageComponent implements OnInit, OnDestroy {
@@ -30,14 +20,15 @@ export class MessageComponent implements OnInit, OnDestroy {
   readMessages: Message[] = [];
   unreadMessages: Message[] = [];
 
-  private _authToken: string;
-  get authToken(): string {
-    this._authToken = localStorage.getItem(AUTH_TOKEN_KEY);
-    return this._authToken;
-  }
+  private authToken: string;
   private _takeUntil$: Subject<boolean> = new Subject<boolean>();
 
-  constructor( @Inject('message') private messageService, private router: Router) { }
+  constructor( @Inject('message') private messageService, 
+      private router: Router,
+      private authGuard: AuthGuardService
+    ) { 
+      this.authToken = this.authGuard.getAuthToken();
+    }
 
   ngOnInit() {
   }
@@ -59,7 +50,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.readMessages = [];
 
-    this.messageService.getMessageByCondition(accesstoken, "has_read_messages").takeUntil(this._takeUntil$).subscribe(res => {
+    this.messageService.getMessageByCondition(accesstoken, 'has_read_messages').takeUntil(this._takeUntil$).subscribe(res => {
       this.readMessages = [...res]
       this.loading = false;
     });
@@ -68,7 +59,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.unreadMessages = [];
 
-    this.messageService.getMessageByCondition(accesstoken, "hasnot_read_messages").takeUntil(this._takeUntil$).subscribe(res => {
+    this.messageService.getMessageByCondition(accesstoken, 'hasnot_read_messages').takeUntil(this._takeUntil$).subscribe(res => {
       this.unreadMessages = [...res]
       this.loading = false;
     });
