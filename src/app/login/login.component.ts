@@ -4,7 +4,7 @@ import { MdlSnackbarService } from 'angular2-mdl';
 import { Auth, AUTH_TOKEN_KEY } from '../domain/entities';
 import { Subject } from 'rxjs/Rx';
 import { AuthGuardService } from '../core/auth-guard.service';
-import { slideDown } from'../domain/animate';
+import { slideDown } from '../domain/animate';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private mdlSnackbarService: MdlSnackbarService,
     @Inject('user') private userService,
     private authGuard: AuthGuardService
-    ) { 
-      this.authToken = this.authGuard.getAuthToken();
-    }
+  ) {
+    this.authToken = this.authGuard.getAuthToken();
+  }
 
   ngOnInit() {
     if (this.authToken) {
