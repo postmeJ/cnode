@@ -43,9 +43,9 @@ export class PublishTopicComponent implements OnInit, CanComponentDeactivate, On
   }
   createForm(): void {
     this.form = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required],
-      type: ['', Validators.required]
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      content: ['', [Validators.required]],
+      type: ['', [Validators.required]]
     });
   }
 
